@@ -1,6 +1,6 @@
 configVersion: 1.0.0
 management:
-  docChecksum: bf17f1f1d742b30d1e058dbde90c855b
+  docChecksum: 16479dc5f2d12846b94424b2bbead71c
   docVersion: 1.0.0
   speakeasyVersion: 1.68.2
   generationVersion: 2.79.1
@@ -13,6 +13,6 @@ generation:
   singleTagPerOp: false
   tagNamespacingDisabled: false
 terraform:
-  version: 1.0.0
+  version: 1.0.1
   author: cribl-dev
   packageName: Cribl

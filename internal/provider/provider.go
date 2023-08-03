@@ -83,13 +83,19 @@ func (p *CriblProvider) Configure(ctx context.Context, req provider.ConfigureReq
 
 func (p *CriblProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
+		NewCertificateResource,
 		NewPipelineResource,
+		NewPolicyRuleResource,
+		NewScriptResource,
 	}
 }
 
 func (p *CriblProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
+		NewCertificateDataSource,
 		NewPipelineDataSource,
+		NewPolicyRuleDataSource,
+		NewScriptDataSource,
 	}
 }
 
