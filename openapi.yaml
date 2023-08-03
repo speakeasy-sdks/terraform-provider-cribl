@@ -44141,7 +44141,6 @@ components:
           description: Group ID
           type: string
     Pipeline:
-      title: Pipeline Settings
       x-speakeasy-entity: Pipeline
       type: object
       required:
