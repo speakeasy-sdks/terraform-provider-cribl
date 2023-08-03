@@ -1,0 +1,13 @@
+configVersion: 1.0.0
+generation:
+  comments:
+    disableComments: false
+    omitDescriptionIfSummaryPresent: false
+  baseServerURL: ""
+  sdkClassName: Cribl-Terraform
+  singleTagPerOp: false
+  tagNamespacingDisabled: false
+terraform:
+  version: 0.0.1
+  author: cribl-dev
+  packageName: Cribl
