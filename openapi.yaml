@@ -209,7 +209,7 @@ paths:
     post:
       tags: 
         - certificates
-
+      x-speakeasy-entity-operation: Certificate#create
       operationId: createCertificate
       summary: Create Certificate
       description: Create Certificate
@@ -244,6 +244,7 @@ paths:
         - certificates
 
       operationId: getCertificate
+      x-speakeasy-entity-operation: Certificate#get
       summary: Get Certificate by ID
       description: Get Certificate by ID
       parameters:
@@ -277,6 +278,7 @@ paths:
         - certificates
 
       operationId: updateCertificate
+      x-speakeasy-entity-operation: Certificate#update
       summary: Update Certificate
       description: Update Certificate
       parameters:
@@ -316,6 +318,7 @@ paths:
         - certificates
 
       operationId: deleteCertificate
+      x-speakeasy-entity-operation: Certificate#delete
       summary: Delete Certificate
       description: Delete Certificate
       parameters:
@@ -1827,6 +1830,7 @@ paths:
         - policies
 
       operationId: createPolicyRule
+      x-speakeasy-entity-operation: PolicyRule#create
       summary: Create PolicyRule
       description: Create PolicyRule
       requestBody:
@@ -1860,6 +1864,7 @@ paths:
         - policies
 
       operationId: getPolicyRule
+      x-speakeasy-entity-operation: PolicyRule#get
       summary: Get PolicyRule by ID
       description: Get PolicyRule by ID
       parameters:
@@ -1893,6 +1898,7 @@ paths:
         - policies
 
       operationId: updatePolicyRule
+      x-speakeasy-entity-operation: PolicyRule#update
       summary: Update PolicyRule
       description: Update PolicyRule
       parameters:
@@ -1932,6 +1938,7 @@ paths:
         - policies
 
       operationId: deletePolicyRule
+      x-speakeasy-entity-operation: PolicyRule#delete
       summary: Delete PolicyRule
       description: Delete PolicyRule
       parameters:
@@ -2487,6 +2494,7 @@ paths:
         - scripts
 
       operationId: createScript
+      x-speakeasy-entity-operation: Script#create
       summary: Create Script
       description: Create Script
       requestBody:
@@ -2520,6 +2528,7 @@ paths:
         - scripts
 
       operationId: getScript
+      x-speakeasy-entity-operation: Script#get
       summary: Get Script by ID
       description: Get Script by ID
       parameters:
@@ -2553,6 +2562,7 @@ paths:
         - scripts
 
       operationId: updateScript
+      x-speakeasy-entity-operation: Script#update
       summary: Update Script
       description: Update Script
       parameters:
@@ -2592,6 +2602,7 @@ paths:
         - scripts
 
       operationId: deleteScript
+      x-speakeasy-entity-operation: Script#delete
       summary: Delete Script
       description: Delete Script
       parameters:
@@ -11466,6 +11477,7 @@ components:
           description: Error message
     Certificate:
       type: object
+      x-speakeasy-entity: Certificate
       required:
         - id
         - cert
@@ -12062,6 +12074,7 @@ components:
         - $ref: "#/components/schemas/NotificationTargetPagerDuty"
     PolicyRule:
       type: object
+      x-speakeasy-entity: PolicyRule
       properties:
         args:
           type: array
@@ -12779,6 +12792,7 @@ components:
         - query
     ScriptLibEntry:
       type: object
+      x-speakeasy-entity: Script
       additionalProperties: true
       required:
         - id
