@@ -224,8 +224,8 @@ func New(opts ...SDKOption) *CriblTerraform {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "terraform",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "1.0.1",
-			GenVersion:        "2.79.1",
+			SDKVersion:        "1.1.0",
+			GenVersion:        "2.81.1",
 			ServerDefaults: []map[string]string{
 				{
 					"organizationID": "api",
