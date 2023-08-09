@@ -9,7 +9,7 @@ data "cribl_pipeline" "my_pipeline" {
                 disabled = false
                 filter = "...my_filter..."
                 final = true
-                group_id = "...my_groupId..."
+                group_id = "...my_group_id..."
                 id = "3c969e9a-3efa-477d-bb14-cd66ae395efb"
             },
         ]

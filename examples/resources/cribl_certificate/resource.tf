@@ -7,5 +7,5 @@ resource "cribl_certificate" "my_certificate" {
         "...",
     ]
             passphrase = "...my_passphrase..."
-            priv_key = "...my_privKey..."
+            priv_key = "...my_priv_key..."
         }
