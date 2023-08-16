@@ -36,7 +36,10 @@ func (s *outputs) CreateOutputObject(ctx context.Context, request shared.Output)
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *outputs) CreateOutputObject(ctx context.Context, request shared.Output)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *outputs) CreateOutputObject(ctx context.Context, request shared.Output)
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Outputs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Outputs = out
@@ -87,7 +91,7 @@ func (s *outputs) CreateOutputObject(ctx context.Context, request shared.Output)
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -143,7 +147,7 @@ func (s *outputs) DeleteOutputID(ctx context.Context, request operations.DeleteO
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Outputs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Outputs = out
@@ -155,7 +159,7 @@ func (s *outputs) DeleteOutputID(ctx context.Context, request operations.DeleteO
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +215,7 @@ func (s *outputs) DeleteDestinationQueue(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *operations.DeleteDestinationQueue200ApplicationJSON
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DeleteDestinationQueue200ApplicationJSONObject = out
@@ -222,7 +226,7 @@ func (s *outputs) DeleteDestinationQueue(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -278,7 +282,7 @@ func (s *outputs) GetOutputID(ctx context.Context, request operations.GetOutputI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Outputs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Outputs = out
@@ -290,7 +294,7 @@ func (s *outputs) GetOutputID(ctx context.Context, request operations.GetOutputI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -346,7 +350,7 @@ func (s *outputs) GetLatestPQ(ctx context.Context, request operations.GetLatestP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *operations.GetLatestPQ200ApplicationJSON
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GetLatestPQ200ApplicationJSONObject = out
@@ -357,7 +361,7 @@ func (s *outputs) GetLatestPQ(ctx context.Context, request operations.GetLatestP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -413,7 +417,7 @@ func (s *outputs) GetSpecifiedOutput(ctx context.Context, request operations.Get
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *operations.GetSpecifiedOutput200ApplicationJSON
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GetSpecifiedOutput200ApplicationJSONObject = out
@@ -424,7 +428,7 @@ func (s *outputs) GetSpecifiedOutput(ctx context.Context, request operations.Get
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -480,7 +484,7 @@ func (s *outputs) GetOutputStatusID(ctx context.Context, request operations.GetO
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.OutputStatuses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.OutputStatuses = out
@@ -492,7 +496,7 @@ func (s *outputs) GetOutputStatusID(ctx context.Context, request operations.GetO
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -545,7 +549,7 @@ func (s *outputs) ListOutputObjects(ctx context.Context) (*operations.ListOutput
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Outputs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Outputs = out
@@ -557,7 +561,7 @@ func (s *outputs) ListOutputObjects(ctx context.Context) (*operations.ListOutput
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -610,7 +614,7 @@ func (s *outputs) ListOutputStatus(ctx context.Context) (*operations.ListOutputS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.OutputStatuses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.OutputStatuses = out
@@ -622,7 +626,7 @@ func (s *outputs) ListOutputStatus(ctx context.Context) (*operations.ListOutputS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -646,7 +650,10 @@ func (s *outputs) PostSampleOutput(ctx context.Context, request operations.PostS
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -669,6 +676,7 @@ func (s *outputs) PostSampleOutput(ctx context.Context, request operations.PostS
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -685,7 +693,7 @@ func (s *outputs) PostSampleOutput(ctx context.Context, request operations.PostS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.OutputTestResponses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.OutputTestResponses = out
@@ -697,7 +705,7 @@ func (s *outputs) PostSampleOutput(ctx context.Context, request operations.PostS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -721,7 +729,10 @@ func (s *outputs) UpdateOutputID(ctx context.Context, request operations.UpdateO
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -744,6 +755,7 @@ func (s *outputs) UpdateOutputID(ctx context.Context, request operations.UpdateO
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -760,7 +772,7 @@ func (s *outputs) UpdateOutputID(ctx context.Context, request operations.UpdateO
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Outputs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Outputs = out
@@ -772,7 +784,7 @@ func (s *outputs) UpdateOutputID(ctx context.Context, request operations.UpdateO
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -69,7 +69,7 @@ func (s *edgeLs) GetEdgeListing(ctx context.Context, request operations.GetEdgeL
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.FilesystemEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.FilesystemEntries = out
@@ -81,7 +81,7 @@ func (s *edgeLs) GetEdgeListing(ctx context.Context, request operations.GetEdgeL
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

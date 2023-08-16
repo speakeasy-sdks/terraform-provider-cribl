@@ -36,7 +36,10 @@ func (s *lookups) CreateLookup(ctx context.Context, request shared.LookupFile) (
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *lookups) CreateLookup(ctx context.Context, request shared.LookupFile) (
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *lookups) CreateLookup(ctx context.Context, request shared.LookupFile) (
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LookupFiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LookupFiles = out
@@ -87,7 +91,7 @@ func (s *lookups) CreateLookup(ctx context.Context, request shared.LookupFile) (
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -143,7 +147,7 @@ func (s *lookups) DeleteLookup(ctx context.Context, request operations.DeleteLoo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LookupFile
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LookupFile = out
@@ -155,7 +159,7 @@ func (s *lookups) DeleteLookup(ctx context.Context, request operations.DeleteLoo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +215,7 @@ func (s *lookups) GetLookup(ctx context.Context, request operations.GetLookupReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LookupFile
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LookupFile = out
@@ -223,7 +227,7 @@ func (s *lookups) GetLookup(ctx context.Context, request operations.GetLookupReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -276,7 +280,7 @@ func (s *lookups) ListLookups(ctx context.Context) (*operations.ListLookupsRespo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LookupFiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LookupFiles = out
@@ -288,7 +292,7 @@ func (s *lookups) ListLookups(ctx context.Context) (*operations.ListLookupsRespo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -312,7 +316,10 @@ func (s *lookups) UpdateLookup(ctx context.Context, request operations.UpdateLoo
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -335,6 +342,7 @@ func (s *lookups) UpdateLookup(ctx context.Context, request operations.UpdateLoo
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -351,7 +359,7 @@ func (s *lookups) UpdateLookup(ctx context.Context, request operations.UpdateLoo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LookupFile
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LookupFile = out
@@ -363,7 +371,7 @@ func (s *lookups) UpdateLookup(ctx context.Context, request operations.UpdateLoo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -420,7 +428,7 @@ func (s *lookups) UploadLookup(ctx context.Context, request operations.UploadLoo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LookupFileInfoResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LookupFileInfoResponse = out
@@ -432,7 +440,7 @@ func (s *lookups) UploadLookup(ctx context.Context, request operations.UploadLoo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

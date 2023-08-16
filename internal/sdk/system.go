@@ -116,7 +116,7 @@ func (s *system) CancelRunningGroup(ctx context.Context, request operations.Canc
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CancelRunningGroup
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.CancelRunningGroup = out
@@ -128,7 +128,7 @@ func (s *system) CancelRunningGroup(ctx context.Context, request operations.Canc
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -152,7 +152,10 @@ func (s *system) ExecuteDistributedUpgrade(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -175,6 +178,7 @@ func (s *system) ExecuteDistributedUpgrade(ctx context.Context, request operatio
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -191,7 +195,7 @@ func (s *system) ExecuteDistributedUpgrade(ctx context.Context, request operatio
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CriblPackage
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.CriblPackage = out
@@ -203,7 +207,7 @@ func (s *system) ExecuteDistributedUpgrade(ctx context.Context, request operatio
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -258,7 +262,7 @@ func (s *system) GetCriblsSettings(ctx context.Context) (*operations.GetCriblsSe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GitSettings
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GitSettings = out
@@ -270,7 +274,7 @@ func (s *system) GetCriblsSettings(ctx context.Context) (*operations.GetCriblsSe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -326,7 +330,7 @@ func (s *system) GetPreviousCriblPackage(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CriblPackage
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.CriblPackage = out
@@ -338,7 +342,7 @@ func (s *system) GetPreviousCriblPackage(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -391,7 +395,7 @@ func (s *system) ListAuthenticationSettings(ctx context.Context) (*operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AuthConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AuthConfigs = out
@@ -403,7 +407,7 @@ func (s *system) ListAuthenticationSettings(ctx context.Context) (*operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -456,7 +460,7 @@ func (s *system) ListCriblVersion(ctx context.Context) (*operations.ListCriblVer
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.UpgradeResults
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.UpgradeResults = out
@@ -468,7 +472,7 @@ func (s *system) ListCriblVersion(ctx context.Context) (*operations.ListCriblVer
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -521,7 +525,7 @@ func (s *system) ListSearchLimits(ctx context.Context) (*operations.ListSearchLi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchSettingses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchSettingses = out
@@ -533,7 +537,7 @@ func (s *system) ListSearchLimits(ctx context.Context) (*operations.ListSearchLi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -586,7 +590,7 @@ func (s *system) ListSettings(ctx context.Context) (*operations.ListSettingsResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SystemSettings
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SystemSettings = out
@@ -598,7 +602,7 @@ func (s *system) ListSettings(ctx context.Context) (*operations.ListSettingsResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -703,7 +707,7 @@ func (s *system) PostStageDistributedPackage(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CriblPackage
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.CriblPackage = out
@@ -715,7 +719,7 @@ func (s *system) PostStageDistributedPackage(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -770,7 +774,7 @@ func (s *system) UpdateCriblsSettings(ctx context.Context) (*operations.UpdateCr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GitSettings
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GitSettings = out
@@ -782,7 +786,7 @@ func (s *system) UpdateCriblsSettings(ctx context.Context) (*operations.UpdateCr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -835,7 +839,7 @@ func (s *system) UpdateAuthenticationSettings(ctx context.Context) (*operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AuthConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AuthConfigs = out
@@ -847,7 +851,7 @@ func (s *system) UpdateAuthenticationSettings(ctx context.Context) (*operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -900,7 +904,7 @@ func (s *system) UpdateChangelogViewState(ctx context.Context) (*operations.Upda
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ChangelogStateses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ChangelogStateses = out
@@ -912,7 +916,7 @@ func (s *system) UpdateChangelogViewState(ctx context.Context) (*operations.Upda
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -965,7 +969,7 @@ func (s *system) UpdateCriblSystemSettings(ctx context.Context) (*operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SystemSettingses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SystemSettingses = out
@@ -977,7 +981,7 @@ func (s *system) UpdateCriblSystemSettings(ctx context.Context) (*operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -1033,7 +1037,7 @@ func (s *system) PostGiveCriblVersion(ctx context.Context, request operations.Po
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Cribl
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Cribl = out
@@ -1045,7 +1049,7 @@ func (s *system) PostGiveCriblVersion(ctx context.Context, request operations.Po
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -1066,7 +1070,10 @@ func (s *system) PostMasterNodePackage(ctx context.Context, request shared.Upgra
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1089,6 +1096,7 @@ func (s *system) PostMasterNodePackage(ctx context.Context, request shared.Upgra
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1105,7 +1113,7 @@ func (s *system) PostMasterNodePackage(ctx context.Context, request shared.Upgra
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Cribl
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Cribl = out
@@ -1117,7 +1125,7 @@ func (s *system) PostMasterNodePackage(ctx context.Context, request shared.Upgra
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -35,7 +35,10 @@ func (s *datasets) CreateDatasetObject(ctx context.Context, request interface{})
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *datasets) CreateDatasetObject(ctx context.Context, request interface{})
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *datasets) CreateDatasetObject(ctx context.Context, request interface{})
 		case utils.MatchContentType(contentType, `application/json`):
 			var out interface{}
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Dataset = out
@@ -86,7 +90,7 @@ func (s *datasets) CreateDatasetObject(ctx context.Context, request interface{})
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -107,7 +111,10 @@ func (s *datasets) CreateDatasetProviderType(ctx context.Context, request shared
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -130,6 +137,7 @@ func (s *datasets) CreateDatasetProviderType(ctx context.Context, request shared
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -146,7 +154,7 @@ func (s *datasets) CreateDatasetProviderType(ctx context.Context, request shared
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatasetProviderType
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatasetProviderType = out
@@ -158,7 +166,7 @@ func (s *datasets) CreateDatasetProviderType(ctx context.Context, request shared
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -214,7 +222,7 @@ func (s *datasets) DeleteDatasetObject(ctx context.Context, request operations.D
 		case utils.MatchContentType(contentType, `application/json`):
 			var out interface{}
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Dataset = out
@@ -226,7 +234,7 @@ func (s *datasets) DeleteDatasetObject(ctx context.Context, request operations.D
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -282,7 +290,7 @@ func (s *datasets) DeleteDatasetProviderType(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatasetProviderType
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatasetProviderType = out
@@ -294,7 +302,7 @@ func (s *datasets) DeleteDatasetProviderType(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -350,7 +358,7 @@ func (s *datasets) GetDatasetObject(ctx context.Context, request operations.GetD
 		case utils.MatchContentType(contentType, `application/json`):
 			var out interface{}
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Dataset = out
@@ -362,7 +370,7 @@ func (s *datasets) GetDatasetObject(ctx context.Context, request operations.GetD
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -418,7 +426,7 @@ func (s *datasets) GetDatasetProviderType(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatasetProviderType
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatasetProviderType = out
@@ -430,7 +438,7 @@ func (s *datasets) GetDatasetProviderType(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -483,7 +491,7 @@ func (s *datasets) ListDatasetObjects(ctx context.Context) (*operations.ListData
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Datasets
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Datasets = out
@@ -495,7 +503,7 @@ func (s *datasets) ListDatasetObjects(ctx context.Context) (*operations.ListData
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -548,7 +556,7 @@ func (s *datasets) ListDatasetProviderTypes(ctx context.Context) (*operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatasetProviderTypes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatasetProviderTypes = out
@@ -560,7 +568,7 @@ func (s *datasets) ListDatasetProviderTypes(ctx context.Context) (*operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -584,7 +592,10 @@ func (s *datasets) UpdateDatasetObject(ctx context.Context, request operations.U
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -607,6 +618,7 @@ func (s *datasets) UpdateDatasetObject(ctx context.Context, request operations.U
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -623,7 +635,7 @@ func (s *datasets) UpdateDatasetObject(ctx context.Context, request operations.U
 		case utils.MatchContentType(contentType, `application/json`):
 			var out interface{}
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Dataset = out
@@ -635,7 +647,7 @@ func (s *datasets) UpdateDatasetObject(ctx context.Context, request operations.U
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -659,7 +671,10 @@ func (s *datasets) UpdateDatasetProviderType(ctx context.Context, request operat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -682,6 +697,7 @@ func (s *datasets) UpdateDatasetProviderType(ctx context.Context, request operat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -698,7 +714,7 @@ func (s *datasets) UpdateDatasetProviderType(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatasetProviderType
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatasetProviderType = out
@@ -710,7 +726,7 @@ func (s *datasets) UpdateDatasetProviderType(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

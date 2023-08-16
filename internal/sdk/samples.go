@@ -36,7 +36,10 @@ func (s *samples) PostLiveData(ctx context.Context, request shared.CaptureParams
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *samples) PostLiveData(ctx context.Context, request shared.CaptureParams
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *samples) PostLiveData(ctx context.Context, request shared.CaptureParams
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LiveData
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LiveData = out
@@ -87,7 +91,7 @@ func (s *samples) PostLiveData(ctx context.Context, request shared.CaptureParams
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -143,7 +147,7 @@ func (s *samples) DeleteDataSampleID(ctx context.Context, request operations.Del
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DataSamples
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DataSamples = out
@@ -155,7 +159,7 @@ func (s *samples) DeleteDataSampleID(ctx context.Context, request operations.Del
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +215,7 @@ func (s *samples) GetDataSampleID(ctx context.Context, request operations.GetDat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DataSamples
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DataSamples = out
@@ -223,7 +227,7 @@ func (s *samples) GetDataSampleID(ctx context.Context, request operations.GetDat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -279,7 +283,7 @@ func (s *samples) GetSampleContent(ctx context.Context, request operations.GetSa
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SampleContents
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SampleContents = out
@@ -291,7 +295,7 @@ func (s *samples) GetSampleContent(ctx context.Context, request operations.GetSa
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -344,7 +348,7 @@ func (s *samples) ListDataSample(ctx context.Context) (*operations.ListDataSampl
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DataSamples
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DataSamples = out
@@ -356,7 +360,7 @@ func (s *samples) ListDataSample(ctx context.Context) (*operations.ListDataSampl
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -377,7 +381,10 @@ func (s *samples) PostDataSample(ctx context.Context, request shared.DataSample)
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -400,6 +407,7 @@ func (s *samples) PostDataSample(ctx context.Context, request shared.DataSample)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -416,7 +424,7 @@ func (s *samples) PostDataSample(ctx context.Context, request shared.DataSample)
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DataSamples
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DataSamples = out
@@ -428,7 +436,7 @@ func (s *samples) PostDataSample(ctx context.Context, request shared.DataSample)
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -449,7 +457,10 @@ func (s *samples) PostSampleEvents(ctx context.Context, request shared.PreviewDa
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -472,6 +483,7 @@ func (s *samples) PostSampleEvents(ctx context.Context, request shared.PreviewDa
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -488,7 +500,7 @@ func (s *samples) PostSampleEvents(ctx context.Context, request shared.PreviewDa
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LiveData
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LiveData = out
@@ -500,7 +512,7 @@ func (s *samples) PostSampleEvents(ctx context.Context, request shared.PreviewDa
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -524,7 +536,10 @@ func (s *samples) UpdateDataSampleID(ctx context.Context, request operations.Upd
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -547,6 +562,7 @@ func (s *samples) UpdateDataSampleID(ctx context.Context, request operations.Upd
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -563,7 +579,7 @@ func (s *samples) UpdateDataSampleID(ctx context.Context, request operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DataSamples
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DataSamples = out
@@ -575,7 +591,7 @@ func (s *samples) UpdateDataSampleID(ctx context.Context, request operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

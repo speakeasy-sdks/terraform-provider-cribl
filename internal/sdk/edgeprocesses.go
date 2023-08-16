@@ -70,7 +70,7 @@ func (s *edgeProcesses) GetProcessRunningDetail(ctx context.Context, request ope
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Processes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Processes = out
@@ -82,7 +82,7 @@ func (s *edgeProcesses) GetProcessRunningDetail(ctx context.Context, request ope
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -135,7 +135,7 @@ func (s *edgeProcesses) ListProcessRunningDetail(ctx context.Context) (*operatio
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Processes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Processes = out
@@ -147,7 +147,7 @@ func (s *edgeProcesses) ListProcessRunningDetail(ctx context.Context) (*operatio
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

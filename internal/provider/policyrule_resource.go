@@ -110,6 +110,9 @@ func (r *PolicyRuleResource) Create(ctx context.Context, req resource.CreateRequ
 	res, err := r.client.Policies.CreatePolicyRule(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -155,6 +158,9 @@ func (r *PolicyRuleResource) Read(ctx context.Context, req resource.ReadRequest,
 	res, err := r.client.Policies.GetPolicyRule(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -191,6 +197,9 @@ func (r *PolicyRuleResource) Update(ctx context.Context, req resource.UpdateRequ
 	res, err := r.client.Policies.UpdatePolicyRule(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -236,6 +245,9 @@ func (r *PolicyRuleResource) Delete(ctx context.Context, req resource.DeleteRequ
 	res, err := r.client.Policies.DeletePolicyRule(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

@@ -70,7 +70,7 @@ func (s *jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobCancel
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobCancel = out
@@ -82,7 +82,7 @@ func (s *jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -138,7 +138,7 @@ func (s *jobs) DeleteJob(ctx context.Context, request operations.DeleteJobReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobDelete
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobDelete = out
@@ -150,7 +150,7 @@ func (s *jobs) DeleteJob(ctx context.Context, request operations.DeleteJobReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -206,7 +206,7 @@ func (s *jobs) GetJob(ctx context.Context, request operations.GetJobRequest) (*o
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobInfos = out
@@ -218,7 +218,7 @@ func (s *jobs) GetJob(ctx context.Context, request operations.GetJobRequest) (*o
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -274,7 +274,7 @@ func (s *jobs) GetTaskError(ctx context.Context, request operations.GetTaskError
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.TaskErrors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.TaskErrors = out
@@ -286,7 +286,7 @@ func (s *jobs) GetTaskError(ctx context.Context, request operations.GetTaskError
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -346,7 +346,7 @@ func (s *jobs) GetJobResult(ctx context.Context, request operations.GetJobResult
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobResult
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobResult = out
@@ -358,7 +358,7 @@ func (s *jobs) GetJobResult(ctx context.Context, request operations.GetJobResult
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -415,7 +415,7 @@ func (s *jobs) ListJobInfos(ctx context.Context, request operations.ListJobInfos
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobInfos = out
@@ -427,7 +427,7 @@ func (s *jobs) ListJobInfos(ctx context.Context, request operations.ListJobInfos
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -490,7 +490,7 @@ func (s *jobs) ListJobResults(ctx context.Context, request operations.ListJobRes
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -546,7 +546,7 @@ func (s *jobs) ListTaskErrors(ctx context.Context, request operations.ListTaskEr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.TaskErrors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.TaskErrors = out
@@ -558,7 +558,7 @@ func (s *jobs) ListTaskErrors(ctx context.Context, request operations.ListTaskEr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -614,7 +614,7 @@ func (s *jobs) PauseJob(ctx context.Context, request operations.PauseJobRequest)
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobPause
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobPause = out
@@ -626,7 +626,7 @@ func (s *jobs) PauseJob(ctx context.Context, request operations.PauseJobRequest)
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -682,7 +682,7 @@ func (s *jobs) PreventJob(ctx context.Context, request operations.PreventJobRequ
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobInfos = out
@@ -694,7 +694,7 @@ func (s *jobs) PreventJob(ctx context.Context, request operations.PreventJobRequ
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -750,7 +750,7 @@ func (s *jobs) ResumeJob(ctx context.Context, request operations.ResumeJobReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobResume
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobResume = out
@@ -762,7 +762,7 @@ func (s *jobs) ResumeJob(ctx context.Context, request operations.ResumeJobReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -783,7 +783,10 @@ func (s *jobs) RunJob(ctx context.Context, request shared.SavedJob) (*operations
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -806,6 +809,7 @@ func (s *jobs) RunJob(ctx context.Context, request shared.SavedJob) (*operations
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -822,7 +826,7 @@ func (s *jobs) RunJob(ctx context.Context, request shared.SavedJob) (*operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobRun
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobRun = out
@@ -834,7 +838,7 @@ func (s *jobs) RunJob(ctx context.Context, request shared.SavedJob) (*operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

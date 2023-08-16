@@ -35,7 +35,10 @@ func (s *secrets) CreateRestSecret(ctx context.Context, request shared.RestSecre
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *secrets) CreateRestSecret(ctx context.Context, request shared.RestSecre
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *secrets) CreateRestSecret(ctx context.Context, request shared.RestSecre
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RestSecret
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RestSecret = out
@@ -86,7 +90,7 @@ func (s *secrets) CreateRestSecret(ctx context.Context, request shared.RestSecre
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -142,7 +146,7 @@ func (s *secrets) DeleteRestSecret(ctx context.Context, request operations.Delet
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RestSecret
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RestSecret = out
@@ -154,7 +158,7 @@ func (s *secrets) DeleteRestSecret(ctx context.Context, request operations.Delet
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -210,7 +214,7 @@ func (s *secrets) GetRestSecret(ctx context.Context, request operations.GetRestS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RestSecret
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RestSecret = out
@@ -222,7 +226,7 @@ func (s *secrets) GetRestSecret(ctx context.Context, request operations.GetRestS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -275,7 +279,7 @@ func (s *secrets) ListRestSecrets(ctx context.Context) (*operations.ListRestSecr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RestSecrets
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RestSecrets = out
@@ -287,7 +291,7 @@ func (s *secrets) ListRestSecrets(ctx context.Context) (*operations.ListRestSecr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -311,7 +315,10 @@ func (s *secrets) UpdateRestSecret(ctx context.Context, request operations.Updat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -334,6 +341,7 @@ func (s *secrets) UpdateRestSecret(ctx context.Context, request operations.Updat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -350,7 +358,7 @@ func (s *secrets) UpdateRestSecret(ctx context.Context, request operations.Updat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RestSecret
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RestSecret = out
@@ -362,7 +370,7 @@ func (s *secrets) UpdateRestSecret(ctx context.Context, request operations.Updat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -1,4 +1,4 @@
-resource "cribl_certificate" "my_certificate" {
+resource "Cribl_certificate" "my_certificate" {
     ca = "...my_ca..."
             cert = "...my_cert..."
             description = "...my_description..."

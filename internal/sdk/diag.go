@@ -72,7 +72,7 @@ func (s *diag) DeleteDiagBundle(ctx context.Context, request operations.DeleteDi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RemoveDiagResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RemoveDiagResponse = out
@@ -84,7 +84,7 @@ func (s *diag) DeleteDiagBundle(ctx context.Context, request operations.DeleteDi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -141,7 +141,7 @@ func (s *diag) GetDiagBundle(ctx context.Context) (*operations.GetDiagBundleResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -194,7 +194,7 @@ func (s *diag) GetSystemInfo(ctx context.Context) (*operations.GetSystemInfoResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SystemInfoObjects
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SystemInfoObjects = out
@@ -206,7 +206,7 @@ func (s *diag) GetSystemInfo(ctx context.Context) (*operations.GetSystemInfoResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -259,7 +259,7 @@ func (s *diag) ListExistingDiagBundles(ctx context.Context) (*operations.ListExi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ExistingDiag
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ExistingDiag = out
@@ -271,7 +271,7 @@ func (s *diag) ListExistingDiagBundles(ctx context.Context) (*operations.ListExi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -292,7 +292,10 @@ func (s *diag) SendDiagBundle(ctx context.Context, request shared.SendDiagBundle
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -315,6 +318,7 @@ func (s *diag) SendDiagBundle(ctx context.Context, request shared.SendDiagBundle
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -331,7 +335,7 @@ func (s *diag) SendDiagBundle(ctx context.Context, request shared.SendDiagBundle
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RemoveDiagResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RemoveDiagResponse = out
@@ -343,7 +347,7 @@ func (s *diag) SendDiagBundle(ctx context.Context, request shared.SendDiagBundle
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

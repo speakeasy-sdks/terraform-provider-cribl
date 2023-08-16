@@ -35,7 +35,10 @@ func (s *fleetMappings) CreateFleetMapping(ctx context.Context, request shared.M
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *fleetMappings) CreateFleetMapping(ctx context.Context, request shared.M
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *fleetMappings) CreateFleetMapping(ctx context.Context, request shared.M
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MappingRulesets
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MappingRulesets = out
@@ -86,7 +90,7 @@ func (s *fleetMappings) CreateFleetMapping(ctx context.Context, request shared.M
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -142,7 +146,7 @@ func (s *fleetMappings) DeleteMappingRuleset(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MappingRulesets
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MappingRulesets = out
@@ -154,7 +158,7 @@ func (s *fleetMappings) DeleteMappingRuleset(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -210,7 +214,7 @@ func (s *fleetMappings) GetMappingRuleset(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MappingRulesets
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MappingRulesets = out
@@ -222,7 +226,7 @@ func (s *fleetMappings) GetMappingRuleset(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -275,7 +279,7 @@ func (s *fleetMappings) ListFleetMappings(ctx context.Context) (*operations.List
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MappingRulesets
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MappingRulesets = out
@@ -287,7 +291,7 @@ func (s *fleetMappings) ListFleetMappings(ctx context.Context) (*operations.List
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -311,7 +315,10 @@ func (s *fleetMappings) UpdateMappingRulesets(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -334,6 +341,7 @@ func (s *fleetMappings) UpdateMappingRulesets(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -350,7 +358,7 @@ func (s *fleetMappings) UpdateMappingRulesets(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MappingRulesets
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MappingRulesets = out
@@ -362,7 +370,7 @@ func (s *fleetMappings) UpdateMappingRulesets(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

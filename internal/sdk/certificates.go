@@ -36,7 +36,10 @@ func (s *certificates) CreateCertificate(ctx context.Context, request shared.Cer
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *certificates) CreateCertificate(ctx context.Context, request shared.Cer
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *certificates) CreateCertificate(ctx context.Context, request shared.Cer
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Certificate
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Certificate = out
@@ -87,7 +91,7 @@ func (s *certificates) CreateCertificate(ctx context.Context, request shared.Cer
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -143,7 +147,7 @@ func (s *certificates) DeleteCertificate(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Certificate
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Certificate = out
@@ -155,7 +159,7 @@ func (s *certificates) DeleteCertificate(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +215,7 @@ func (s *certificates) GetCertificate(ctx context.Context, request operations.Ge
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Certificate
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Certificate = out
@@ -223,7 +227,7 @@ func (s *certificates) GetCertificate(ctx context.Context, request operations.Ge
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -276,7 +280,7 @@ func (s *certificates) ListCertificates(ctx context.Context) (*operations.ListCe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Certificates
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Certificates = out
@@ -288,7 +292,7 @@ func (s *certificates) ListCertificates(ctx context.Context) (*operations.ListCe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -312,7 +316,10 @@ func (s *certificates) UpdateCertificate(ctx context.Context, request operations
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -335,6 +342,7 @@ func (s *certificates) UpdateCertificate(ctx context.Context, request operations
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -351,7 +359,7 @@ func (s *certificates) UpdateCertificate(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Certificate
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Certificate = out
@@ -363,7 +371,7 @@ func (s *certificates) UpdateCertificate(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

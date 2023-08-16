@@ -36,7 +36,10 @@ func (s *scripts) CreateScript(ctx context.Context, request shared.ScriptLibEntr
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *scripts) CreateScript(ctx context.Context, request shared.ScriptLibEntr
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *scripts) CreateScript(ctx context.Context, request shared.ScriptLibEntr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ScriptLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ScriptLibEntry = out
@@ -87,7 +91,7 @@ func (s *scripts) CreateScript(ctx context.Context, request shared.ScriptLibEntr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -143,7 +147,7 @@ func (s *scripts) DeleteScript(ctx context.Context, request operations.DeleteScr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ScriptLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ScriptLibEntry = out
@@ -155,7 +159,7 @@ func (s *scripts) DeleteScript(ctx context.Context, request operations.DeleteScr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +215,7 @@ func (s *scripts) GetScript(ctx context.Context, request operations.GetScriptReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ScriptLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ScriptLibEntry = out
@@ -223,7 +227,7 @@ func (s *scripts) GetScript(ctx context.Context, request operations.GetScriptReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -276,7 +280,7 @@ func (s *scripts) ListScripts(ctx context.Context) (*operations.ListScriptsRespo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ScriptLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ScriptLibEntries = out
@@ -288,7 +292,7 @@ func (s *scripts) ListScripts(ctx context.Context) (*operations.ListScriptsRespo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -312,7 +316,10 @@ func (s *scripts) UpdateScript(ctx context.Context, request operations.UpdateScr
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -335,6 +342,7 @@ func (s *scripts) UpdateScript(ctx context.Context, request operations.UpdateScr
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -351,7 +359,7 @@ func (s *scripts) UpdateScript(ctx context.Context, request operations.UpdateScr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ScriptLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ScriptLibEntry = out
@@ -363,7 +371,7 @@ func (s *scripts) UpdateScript(ctx context.Context, request operations.UpdateScr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

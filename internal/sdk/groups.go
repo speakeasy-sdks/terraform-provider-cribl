@@ -35,7 +35,10 @@ func (s *groups) CreateConfigGroup(ctx context.Context, request shared.ConfigGro
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *groups) CreateConfigGroup(ctx context.Context, request shared.ConfigGro
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *groups) CreateConfigGroup(ctx context.Context, request shared.ConfigGro
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfigGroup
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfigGroup = out
@@ -86,7 +90,7 @@ func (s *groups) CreateConfigGroup(ctx context.Context, request shared.ConfigGro
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -142,7 +146,7 @@ func (s *groups) DeleteConfigGroup(ctx context.Context, request operations.Delet
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfigGroup
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfigGroup = out
@@ -154,7 +158,7 @@ func (s *groups) DeleteConfigGroup(ctx context.Context, request operations.Delet
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -178,7 +182,10 @@ func (s *groups) DeployFleetOrWorkerGroup(ctx context.Context, request operation
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -201,6 +208,7 @@ func (s *groups) DeployFleetOrWorkerGroup(ctx context.Context, request operation
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -217,7 +225,7 @@ func (s *groups) DeployFleetOrWorkerGroup(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfigGroup
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfigGroup = out
@@ -229,7 +237,7 @@ func (s *groups) DeployFleetOrWorkerGroup(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -289,7 +297,7 @@ func (s *groups) GetConfigGroup(ctx context.Context, request operations.GetConfi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfigGroup
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfigGroup = out
@@ -301,7 +309,7 @@ func (s *groups) GetConfigGroup(ctx context.Context, request operations.GetConfi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -325,7 +333,10 @@ func (s *groups) GetGroupBundle(ctx context.Context, request operations.GetGroup
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "GET", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -348,6 +359,7 @@ func (s *groups) GetGroupBundle(ctx context.Context, request operations.GetGroup
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -364,7 +376,7 @@ func (s *groups) GetGroupBundle(ctx context.Context, request operations.GetGroup
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GroupBundle
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GroupBundle = out
@@ -376,7 +388,7 @@ func (s *groups) GetGroupBundle(ctx context.Context, request operations.GetGroup
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -433,7 +445,7 @@ func (s *groups) ListGroups(ctx context.Context, request operations.ListGroupsRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfigGroups
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfigGroups = out
@@ -445,7 +457,7 @@ func (s *groups) ListGroups(ctx context.Context, request operations.ListGroupsRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -469,7 +481,10 @@ func (s *groups) UpdateConfigGroup(ctx context.Context, request operations.Updat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -492,6 +507,7 @@ func (s *groups) UpdateConfigGroup(ctx context.Context, request operations.Updat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -508,7 +524,7 @@ func (s *groups) UpdateConfigGroup(ctx context.Context, request operations.Updat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfigGroup
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfigGroup = out
@@ -520,7 +536,7 @@ func (s *groups) UpdateConfigGroup(ctx context.Context, request operations.Updat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -71,7 +71,7 @@ func (s *clui) ListCluisResults(ctx context.Context, request operations.ListClui
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CluiItems
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.CluiItems = out
@@ -83,7 +83,7 @@ func (s *clui) ListCluisResults(ctx context.Context, request operations.ListClui
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

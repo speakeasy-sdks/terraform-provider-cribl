@@ -36,7 +36,10 @@ func (s *search) ApplyQuerySnippet(ctx context.Context, request shared.PreviewRe
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *search) ApplyQuerySnippet(ctx context.Context, request shared.PreviewRe
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *search) ApplyQuerySnippet(ctx context.Context, request shared.PreviewRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PreviewResponses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PreviewResponses = out
@@ -87,7 +91,7 @@ func (s *search) ApplyQuerySnippet(ctx context.Context, request shared.PreviewRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -108,7 +112,10 @@ func (s *search) CreateSearchJob(ctx context.Context, request shared.SearchJob) 
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -131,6 +138,7 @@ func (s *search) CreateSearchJob(ctx context.Context, request shared.SearchJob) 
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -147,7 +155,7 @@ func (s *search) CreateSearchJob(ctx context.Context, request shared.SearchJob) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchJob = out
@@ -159,7 +167,7 @@ func (s *search) CreateSearchJob(ctx context.Context, request shared.SearchJob) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -215,7 +223,7 @@ func (s *search) DeleteSearchJob(ctx context.Context, request operations.DeleteS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchJob = out
@@ -227,7 +235,7 @@ func (s *search) DeleteSearchJob(ctx context.Context, request operations.DeleteS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -283,7 +291,7 @@ func (s *search) DispatchSearch(ctx context.Context, request operations.Dispatch
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchID
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchID = out
@@ -295,7 +303,7 @@ func (s *search) DispatchSearch(ctx context.Context, request operations.Dispatch
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -356,7 +364,7 @@ func (s *search) GetSearchDoc(ctx context.Context) (*operations.GetSearchDocResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -412,7 +420,7 @@ func (s *search) GetSearchJob(ctx context.Context, request operations.GetSearchJ
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchJob = out
@@ -424,7 +432,7 @@ func (s *search) GetSearchJob(ctx context.Context, request operations.GetSearchJ
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -480,7 +488,7 @@ func (s *search) GetSearchTimeline(ctx context.Context, request operations.GetSe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchTimeline
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchTimeline = out
@@ -492,7 +500,7 @@ func (s *search) GetSearchTimeline(ctx context.Context, request operations.GetSe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -548,7 +556,7 @@ func (s *search) ListFieldSummaries(ctx context.Context, request operations.List
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.FieldSummaries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.FieldSummaries = out
@@ -560,7 +568,7 @@ func (s *search) ListFieldSummaries(ctx context.Context, request operations.List
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -616,7 +624,7 @@ func (s *search) ListJobStatus(ctx context.Context, request operations.ListJobSt
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchJobStatus
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchJobStatus = out
@@ -628,7 +636,7 @@ func (s *search) ListJobStatus(ctx context.Context, request operations.ListJobSt
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -692,7 +700,7 @@ func (s *search) ListSearchJobMetrics(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -745,7 +753,7 @@ func (s *search) ListSearchJobs(ctx context.Context) (*operations.ListSearchJobs
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchJobs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchJobs = out
@@ -757,7 +765,7 @@ func (s *search) ListSearchJobs(ctx context.Context) (*operations.ListSearchJobs
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -813,7 +821,7 @@ func (s *search) ListSearchLogs(ctx context.Context, request operations.ListSear
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchLogs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchLogs = out
@@ -825,7 +833,7 @@ func (s *search) ListSearchLogs(ctx context.Context, request operations.ListSear
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -846,7 +854,10 @@ func (s *search) PostEventBreakerOnData(ctx context.Context, request shared.Data
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -869,6 +880,7 @@ func (s *search) PostEventBreakerOnData(ctx context.Context, request shared.Data
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -885,7 +897,7 @@ func (s *search) PostEventBreakerOnData(ctx context.Context, request shared.Data
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PreviewResponses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PreviewResponses = out
@@ -897,7 +909,7 @@ func (s *search) PostEventBreakerOnData(ctx context.Context, request shared.Data
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -921,7 +933,10 @@ func (s *search) UpdateSearchJob(ctx context.Context, request operations.UpdateS
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -944,6 +959,7 @@ func (s *search) UpdateSearchJob(ctx context.Context, request operations.UpdateS
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -960,7 +976,7 @@ func (s *search) UpdateSearchJob(ctx context.Context, request operations.UpdateS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SearchJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SearchJob = out
@@ -972,7 +988,7 @@ func (s *search) UpdateSearchJob(ctx context.Context, request operations.UpdateS
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

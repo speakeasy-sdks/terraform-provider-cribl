@@ -126,6 +126,9 @@ func (r *ScriptResource) Create(ctx context.Context, req resource.CreateRequest,
 	res, err := r.client.Scripts.CreateScript(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -171,6 +174,9 @@ func (r *ScriptResource) Read(ctx context.Context, req resource.ReadRequest, res
 	res, err := r.client.Scripts.GetScript(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -207,6 +213,9 @@ func (r *ScriptResource) Update(ctx context.Context, req resource.UpdateRequest,
 	res, err := r.client.Scripts.UpdateScript(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -252,6 +261,9 @@ func (r *ScriptResource) Delete(ctx context.Context, req resource.DeleteRequest,
 	res, err := r.client.Scripts.DeleteScript(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

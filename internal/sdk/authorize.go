@@ -67,7 +67,7 @@ func (s *authorize) ListAuthorizations(ctx context.Context) (*operations.ListAut
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AuthPolicyEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AuthPolicyEntries = out
@@ -79,7 +79,7 @@ func (s *authorize) ListAuthorizations(ctx context.Context) (*operations.ListAut
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -132,7 +132,7 @@ func (s *authorize) ListClientRoles(ctx context.Context) (*operations.ListClient
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ClientRoleEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ClientRoleEntries = out
@@ -144,7 +144,7 @@ func (s *authorize) ListClientRoles(ctx context.Context) (*operations.ListClient
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

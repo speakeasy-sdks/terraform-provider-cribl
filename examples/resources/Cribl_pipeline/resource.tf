@@ -1,28 +1,28 @@
-data "cribl_pipeline" "my_pipeline" {
+resource "Cribl_pipeline" "my_pipeline" {
     conf = {
-        async_func_timeout = 3
+        async_func_timeout = 7
         description = "...my_description..."
         functions = [
             {
                 conf = {}
                 description = "...my_description..."
-                disabled = false
+                disabled = true
                 filter = "...my_filter..."
-                final = true
+                final = false
                 group_id = "...my_group_id..."
-                id = "3c969e9a-3efa-477d-bb14-cd66ae395efb"
+                id = "dfc2ddf7-cc78-4ca1-ba92-8fc816742cb7"
             },
         ]
         groups = {
-            "provident" = {
+            "ipsum" = {
                 description = "...my_description..."
-                disabled = false
-                name = "Nelson Lesch"
+                disabled = true
+                name = "Dorothy Hane"
             }
-            "deserunt" = {
+            "iste" = {
                 description = "...my_description..."
                 disabled = false
-                name = "Ada Moen IV"
+                name = "Lester Welch"
             }
         }
         output = "...my_output..."
@@ -30,5 +30,5 @@ data "cribl_pipeline" "my_pipeline" {
             "...",
         ]
     }
-            id = "4ba4469b-6e21-4419-9989-0afa563e2516"
+            id = "7596eb10-faaa-4235-ac59-55907aff1a3a"
         }

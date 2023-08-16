@@ -67,7 +67,7 @@ func (s *security) GetKMSConfig(ctx context.Context) (*operations.GetKMSConfigRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.KMSConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.KMSConfigs = out
@@ -79,7 +79,7 @@ func (s *security) GetKMSConfig(ctx context.Context) (*operations.GetKMSConfigRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -132,7 +132,7 @@ func (s *security) GetKMSHealth(ctx context.Context) (*operations.GetKMSHealthRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.KMSHealth
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.KMSHealth = out
@@ -144,7 +144,7 @@ func (s *security) GetKMSHealth(ctx context.Context) (*operations.GetKMSHealthRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -165,7 +165,10 @@ func (s *security) UpdateKMSConfig(ctx context.Context, request shared.IKMSProvi
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -188,6 +191,7 @@ func (s *security) UpdateKMSConfig(ctx context.Context, request shared.IKMSProvi
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -204,7 +208,7 @@ func (s *security) UpdateKMSConfig(ctx context.Context, request shared.IKMSProvi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.IKMSProviderConfig
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.IKMSProviderConfig = out
@@ -216,7 +220,7 @@ func (s *security) UpdateKMSConfig(ctx context.Context, request shared.IKMSProvi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

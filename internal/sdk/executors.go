@@ -71,7 +71,7 @@ func (s *executors) GetExecutorID(ctx context.Context, request operations.GetExe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Executors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Executors = out
@@ -83,7 +83,7 @@ func (s *executors) GetExecutorID(ctx context.Context, request operations.GetExe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -136,7 +136,7 @@ func (s *executors) ListExecutorObject(ctx context.Context) (*operations.ListExe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Executors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Executors = out
@@ -148,7 +148,7 @@ func (s *executors) ListExecutorObject(ctx context.Context) (*operations.ListExe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

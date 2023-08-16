@@ -71,7 +71,7 @@ func (s *edge) GetEdgeListing(ctx context.Context, request operations.GetEdgeLis
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.FilesystemEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.FilesystemEntries = out
@@ -83,7 +83,7 @@ func (s *edge) GetEdgeListing(ctx context.Context, request operations.GetEdgeLis
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -136,7 +136,7 @@ func (s *edge) GetHostMetadataStructure(ctx context.Context) (*operations.GetHos
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.EdgeMetadatas
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.EdgeMetadatas = out
@@ -148,7 +148,7 @@ func (s *edge) GetHostMetadataStructure(ctx context.Context) (*operations.GetHos
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -204,7 +204,7 @@ func (s *edge) GetProcessRunningDetail(ctx context.Context, request operations.G
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Processes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Processes = out
@@ -216,7 +216,7 @@ func (s *edge) GetProcessRunningDetail(ctx context.Context, request operations.G
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -273,7 +273,7 @@ func (s *edge) ListBytes(ctx context.Context, request operations.ListBytesReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SampleFiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SampleFiles = out
@@ -285,7 +285,7 @@ func (s *edge) ListBytes(ctx context.Context, request operations.ListBytesReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -338,7 +338,7 @@ func (s *edge) ListConfiguredCollectors(ctx context.Context) (*operations.ListCo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfiguredCollectors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfiguredCollectors = out
@@ -350,7 +350,7 @@ func (s *edge) ListConfiguredCollectors(ctx context.Context) (*operations.ListCo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -403,7 +403,7 @@ func (s *edge) ListEdgeHostFiles(ctx context.Context) (*operations.ListEdgeHostF
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.EdgeHostFiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.EdgeHostFiles = out
@@ -415,7 +415,7 @@ func (s *edge) ListEdgeHostFiles(ctx context.Context) (*operations.ListEdgeHostF
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -472,7 +472,7 @@ func (s *edge) ListLogFileList(ctx context.Context, request operations.ListLogFi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.EdgeFiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.EdgeFiles = out
@@ -484,7 +484,7 @@ func (s *edge) ListLogFileList(ctx context.Context, request operations.ListLogFi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -537,7 +537,7 @@ func (s *edge) ListProcessRunningDetail(ctx context.Context) (*operations.ListPr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Processes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Processes = out
@@ -549,7 +549,7 @@ func (s *edge) ListProcessRunningDetail(ctx context.Context) (*operations.ListPr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

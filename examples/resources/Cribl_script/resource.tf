@@ -1,4 +1,4 @@
-resource "cribl_script" "my_script" {
+resource "Cribl_script" "my_script" {
     args = [
         "...",
     ]

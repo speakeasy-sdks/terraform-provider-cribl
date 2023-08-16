@@ -71,7 +71,7 @@ func (s *distributed) GetDistributedDeployment(ctx context.Context, request oper
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DistributedSummaries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DistributedSummaries = out
@@ -83,7 +83,7 @@ func (s *distributed) GetDistributedDeployment(ctx context.Context, request oper
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -142,7 +142,7 @@ func (s *distributed) ListDiagBundles(ctx context.Context) (*operations.ListDiag
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

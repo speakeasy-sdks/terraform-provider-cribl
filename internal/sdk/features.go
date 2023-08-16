@@ -70,7 +70,7 @@ func (s *features) GetFeature(ctx context.Context, request operations.GetFeature
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.FeaturesEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.FeaturesEntry = out
@@ -82,7 +82,7 @@ func (s *features) GetFeature(ctx context.Context, request operations.GetFeature
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -135,7 +135,7 @@ func (s *features) ListFeatures(ctx context.Context) (*operations.ListFeaturesRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.FeaturesEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.FeaturesEntries = out
@@ -147,7 +147,7 @@ func (s *features) ListFeatures(ctx context.Context) (*operations.ListFeaturesRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

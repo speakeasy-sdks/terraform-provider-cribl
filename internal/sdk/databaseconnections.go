@@ -35,7 +35,10 @@ func (s *databaseConnections) TestDatabaseConnection(ctx context.Context, reques
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *databaseConnections) TestDatabaseConnection(ctx context.Context, reques
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *databaseConnections) TestDatabaseConnection(ctx context.Context, reques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatabaseConnectionTestResults
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatabaseConnectionTestResults = out
@@ -86,7 +90,7 @@ func (s *databaseConnections) TestDatabaseConnection(ctx context.Context, reques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -142,7 +146,7 @@ func (s *databaseConnections) DeleteDatabaseConnectionConfigID(ctx context.Conte
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatabaseConnectionConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatabaseConnectionConfigs = out
@@ -154,7 +158,7 @@ func (s *databaseConnections) DeleteDatabaseConnectionConfigID(ctx context.Conte
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -210,7 +214,7 @@ func (s *databaseConnections) GetDatabaseConnectionConfigID(ctx context.Context,
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatabaseConnectionConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatabaseConnectionConfigs = out
@@ -222,7 +226,7 @@ func (s *databaseConnections) GetDatabaseConnectionConfigID(ctx context.Context,
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -279,7 +283,7 @@ func (s *databaseConnections) ListDatabaseConnection(ctx context.Context, reques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatabaseConnectionConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatabaseConnectionConfigs = out
@@ -291,7 +295,7 @@ func (s *databaseConnections) ListDatabaseConnection(ctx context.Context, reques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -312,7 +316,10 @@ func (s *databaseConnections) PostDatabaseConnection(ctx context.Context, reques
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -335,6 +342,7 @@ func (s *databaseConnections) PostDatabaseConnection(ctx context.Context, reques
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -351,7 +359,7 @@ func (s *databaseConnections) PostDatabaseConnection(ctx context.Context, reques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatabaseConnectionConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatabaseConnectionConfigs = out
@@ -363,7 +371,7 @@ func (s *databaseConnections) PostDatabaseConnection(ctx context.Context, reques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -387,7 +395,10 @@ func (s *databaseConnections) UpdateDatabaseConnectionConfigID(ctx context.Conte
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -410,6 +421,7 @@ func (s *databaseConnections) UpdateDatabaseConnectionConfigID(ctx context.Conte
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -426,7 +438,7 @@ func (s *databaseConnections) UpdateDatabaseConnectionConfigID(ctx context.Conte
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DatabaseConnectionConfigs
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DatabaseConnectionConfigs = out
@@ -438,7 +450,7 @@ func (s *databaseConnections) UpdateDatabaseConnectionConfigID(ctx context.Conte
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -69,7 +69,7 @@ func (s *health) GetHealthInfo(ctx context.Context) (*operations.GetHealthInfoRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.HealthStatus
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.HealthStatus = out

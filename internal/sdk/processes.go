@@ -67,7 +67,7 @@ func (s *processes) ListProcesses(ctx context.Context) (*operations.ListProcesse
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ProcessEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ProcessEntries = out
@@ -79,7 +79,7 @@ func (s *processes) ListProcesses(ctx context.Context) (*operations.ListProcesse
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

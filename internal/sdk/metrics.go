@@ -36,7 +36,10 @@ func (s *metrics) PostInternalSystemMetrics(ctx context.Context, request shared.
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *metrics) PostInternalSystemMetrics(ctx context.Context, request shared.
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *metrics) PostInternalSystemMetrics(ctx context.Context, request shared.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MetricsResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MetricsResponse = out
@@ -87,7 +91,7 @@ func (s *metrics) PostInternalSystemMetrics(ctx context.Context, request shared.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -108,7 +112,10 @@ func (s *metrics) PostMetrics(ctx context.Context, request shared.GetNamesOpts) 
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -131,6 +138,7 @@ func (s *metrics) PostMetrics(ctx context.Context, request shared.GetNamesOpts) 
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -147,7 +155,7 @@ func (s *metrics) PostMetrics(ctx context.Context, request shared.GetNamesOpts) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MetricsInfo
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MetricsInfo = out
@@ -159,7 +167,7 @@ func (s *metrics) PostMetrics(ctx context.Context, request shared.GetNamesOpts) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -216,7 +224,7 @@ func (s *metrics) QueryMetrics(ctx context.Context, request operations.QueryMetr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MetricsInfo
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MetricsInfo = out
@@ -228,7 +236,7 @@ func (s *metrics) QueryMetrics(ctx context.Context, request operations.QueryMetr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

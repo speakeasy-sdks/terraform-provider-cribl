@@ -70,7 +70,7 @@ func (s *parquetschemas) DeleteSchemaID(ctx context.Context, request operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntries = out
@@ -82,7 +82,7 @@ func (s *parquetschemas) DeleteSchemaID(ctx context.Context, request operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -138,7 +138,7 @@ func (s *parquetschemas) GetSchemaID(ctx context.Context, request operations.Get
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntries = out
@@ -150,7 +150,7 @@ func (s *parquetschemas) GetSchemaID(ctx context.Context, request operations.Get
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -203,7 +203,7 @@ func (s *parquetschemas) ListSchema(ctx context.Context) (*operations.ListSchema
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntries = out
@@ -215,7 +215,7 @@ func (s *parquetschemas) ListSchema(ctx context.Context) (*operations.ListSchema
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -236,7 +236,10 @@ func (s *parquetschemas) PostSchema(ctx context.Context, request shared.SchemaLi
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -259,6 +262,7 @@ func (s *parquetschemas) PostSchema(ctx context.Context, request shared.SchemaLi
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -275,7 +279,7 @@ func (s *parquetschemas) PostSchema(ctx context.Context, request shared.SchemaLi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntries = out
@@ -287,7 +291,7 @@ func (s *parquetschemas) PostSchema(ctx context.Context, request shared.SchemaLi
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -311,7 +315,10 @@ func (s *parquetschemas) UpdateSchemaID(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -334,6 +341,7 @@ func (s *parquetschemas) UpdateSchemaID(ctx context.Context, request operations.
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -350,7 +358,7 @@ func (s *parquetschemas) UpdateSchemaID(ctx context.Context, request operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntries = out
@@ -362,7 +370,7 @@ func (s *parquetschemas) UpdateSchemaID(ctx context.Context, request operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -36,7 +36,10 @@ func (s *users) CreateUser(ctx context.Context, request shared.User) (*operation
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *users) CreateUser(ctx context.Context, request shared.User) (*operation
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *users) CreateUser(ctx context.Context, request shared.User) (*operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Users
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Users = out
@@ -87,7 +91,7 @@ func (s *users) CreateUser(ctx context.Context, request shared.User) (*operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -143,7 +147,7 @@ func (s *users) DeleteUserID(ctx context.Context, request operations.DeleteUserI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Users
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Users = out
@@ -155,7 +159,7 @@ func (s *users) DeleteUserID(ctx context.Context, request operations.DeleteUserI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +215,7 @@ func (s *users) GetUserID(ctx context.Context, request operations.GetUserIDReque
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Users
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Users = out
@@ -223,7 +227,7 @@ func (s *users) GetUserID(ctx context.Context, request operations.GetUserIDReque
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -276,7 +280,7 @@ func (s *users) ListUsers(ctx context.Context) (*operations.ListUsersResponse, e
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Users
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Users = out
@@ -288,7 +292,7 @@ func (s *users) ListUsers(ctx context.Context) (*operations.ListUsersResponse, e
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -312,7 +316,10 @@ func (s *users) UpdateUserObject(ctx context.Context, request operations.UpdateU
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -335,6 +342,7 @@ func (s *users) UpdateUserObject(ctx context.Context, request operations.UpdateU
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -351,7 +359,7 @@ func (s *users) UpdateUserObject(ctx context.Context, request operations.UpdateU
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Users
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Users = out
@@ -362,7 +370,7 @@ func (s *users) UpdateUserObject(ctx context.Context, request operations.UpdateU
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -386,7 +394,10 @@ func (s *users) UpdateUserProperties(ctx context.Context, request operations.Upd
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -409,6 +420,7 @@ func (s *users) UpdateUserProperties(ctx context.Context, request operations.Upd
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -425,7 +437,7 @@ func (s *users) UpdateUserProperties(ctx context.Context, request operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.UserProfiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.UserProfiles = out
@@ -437,7 +449,7 @@ func (s *users) UpdateUserProperties(ctx context.Context, request operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

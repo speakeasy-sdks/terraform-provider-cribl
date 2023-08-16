@@ -71,7 +71,7 @@ func (s *parsers) DeleteParserID(ctx context.Context, request operations.DeleteP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ParserLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ParserLibEntries = out
@@ -83,7 +83,7 @@ func (s *parsers) DeleteParserID(ctx context.Context, request operations.DeleteP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -139,7 +139,7 @@ func (s *parsers) GetParserID(ctx context.Context, request operations.GetParserI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ParserLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ParserLibEntries = out
@@ -151,7 +151,7 @@ func (s *parsers) GetParserID(ctx context.Context, request operations.GetParserI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -204,7 +204,7 @@ func (s *parsers) ListParser(ctx context.Context) (*operations.ListParserRespons
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ParserLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ParserLibEntries = out
@@ -216,7 +216,7 @@ func (s *parsers) ListParser(ctx context.Context) (*operations.ListParserRespons
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -237,7 +237,10 @@ func (s *parsers) PostParserObject(ctx context.Context, request shared.ParserLib
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -260,6 +263,7 @@ func (s *parsers) PostParserObject(ctx context.Context, request shared.ParserLib
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -276,7 +280,7 @@ func (s *parsers) PostParserObject(ctx context.Context, request shared.ParserLib
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ParserLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ParserLibEntries = out
@@ -288,7 +292,7 @@ func (s *parsers) PostParserObject(ctx context.Context, request shared.ParserLib
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -312,7 +316,10 @@ func (s *parsers) UpdateParserID(ctx context.Context, request operations.UpdateP
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -335,6 +342,7 @@ func (s *parsers) UpdateParserID(ctx context.Context, request operations.UpdateP
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -351,7 +359,7 @@ func (s *parsers) UpdateParserID(ctx context.Context, request operations.UpdateP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ParserLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ParserLibEntries = out
@@ -363,7 +371,7 @@ func (s *parsers) UpdateParserID(ctx context.Context, request operations.UpdateP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

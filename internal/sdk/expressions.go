@@ -68,7 +68,7 @@ func (s *expressions) PostJavascriptExpression(ctx context.Context) (*operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ExprLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ExprLibEntries = out
@@ -80,7 +80,7 @@ func (s *expressions) PostJavascriptExpression(ctx context.Context) (*operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -75,7 +75,7 @@ func (s *logging) GetLogFileContent(ctx context.Context, request operations.GetL
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LogFileContents
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LogFileContents = out
@@ -87,7 +87,7 @@ func (s *logging) GetLogFileContent(ctx context.Context, request operations.GetL
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -147,7 +147,7 @@ func (s *logging) ListLogFileContents(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LogFileContents
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LogFileContents = out
@@ -159,7 +159,7 @@ func (s *logging) ListLogFileContents(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -212,7 +212,7 @@ func (s *logging) ListLogFiles(ctx context.Context) (*operations.ListLogFilesRes
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LogFilesInfo
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LogFilesInfo = out
@@ -224,7 +224,7 @@ func (s *logging) ListLogFiles(ctx context.Context) (*operations.ListLogFilesRes
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -281,7 +281,7 @@ func (s *logging) ListLogFilesContents(ctx context.Context, request operations.L
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.LogFileContents
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.LogFileContents = out
@@ -293,7 +293,7 @@ func (s *logging) ListLogFilesContents(ctx context.Context, request operations.L
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

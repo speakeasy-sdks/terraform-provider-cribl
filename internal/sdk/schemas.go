@@ -35,7 +35,10 @@ func (s *schemas) CreateSchema(ctx context.Context, request shared.SchemaLibEntr
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *schemas) CreateSchema(ctx context.Context, request shared.SchemaLibEntr
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *schemas) CreateSchema(ctx context.Context, request shared.SchemaLibEntr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntry = out
@@ -86,7 +90,7 @@ func (s *schemas) CreateSchema(ctx context.Context, request shared.SchemaLibEntr
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -142,7 +146,7 @@ func (s *schemas) DeleteSchema(ctx context.Context, request operations.DeleteSch
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntry = out
@@ -154,7 +158,7 @@ func (s *schemas) DeleteSchema(ctx context.Context, request operations.DeleteSch
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -210,7 +214,7 @@ func (s *schemas) GetSchema(ctx context.Context, request operations.GetSchemaReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntry = out
@@ -222,7 +226,7 @@ func (s *schemas) GetSchema(ctx context.Context, request operations.GetSchemaReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -275,7 +279,7 @@ func (s *schemas) ListSchemas(ctx context.Context) (*operations.ListSchemasRespo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntries = out
@@ -287,7 +291,7 @@ func (s *schemas) ListSchemas(ctx context.Context) (*operations.ListSchemasRespo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -311,7 +315,10 @@ func (s *schemas) UpdateSchema(ctx context.Context, request operations.UpdateSch
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -334,6 +341,7 @@ func (s *schemas) UpdateSchema(ctx context.Context, request operations.UpdateSch
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -350,7 +358,7 @@ func (s *schemas) UpdateSchema(ctx context.Context, request operations.UpdateSch
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SchemaLibEntry = out
@@ -362,7 +370,7 @@ func (s *schemas) UpdateSchema(ctx context.Context, request operations.UpdateSch
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -70,7 +70,7 @@ func (s *conditions) GetCondition(ctx context.Context, request operations.GetCon
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Conditions
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Conditions = out
@@ -82,7 +82,7 @@ func (s *conditions) GetCondition(ctx context.Context, request operations.GetCon
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -135,7 +135,7 @@ func (s *conditions) ListConditions(ctx context.Context) (*operations.ListCondit
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Conditions
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Conditions = out
@@ -147,7 +147,7 @@ func (s *conditions) ListConditions(ctx context.Context) (*operations.ListCondit
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -35,7 +35,10 @@ func (s *profiler) CreateProfiler(ctx context.Context, request shared.ProfilerIt
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *profiler) CreateProfiler(ctx context.Context, request shared.ProfilerIt
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *profiler) CreateProfiler(ctx context.Context, request shared.ProfilerIt
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ProfilerItem
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ProfilerItem = out
@@ -86,7 +90,7 @@ func (s *profiler) CreateProfiler(ctx context.Context, request shared.ProfilerIt
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -142,7 +146,7 @@ func (s *profiler) DeleteProfiler(ctx context.Context, request operations.Delete
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ProfilerItem
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ProfilerItem = out
@@ -154,7 +158,7 @@ func (s *profiler) DeleteProfiler(ctx context.Context, request operations.Delete
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -210,7 +214,7 @@ func (s *profiler) GetProfiler(ctx context.Context, request operations.GetProfil
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ProfilerItem
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ProfilerItem = out
@@ -222,7 +226,7 @@ func (s *profiler) GetProfiler(ctx context.Context, request operations.GetProfil
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -275,7 +279,7 @@ func (s *profiler) ListProfilers(ctx context.Context) (*operations.ListProfilers
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ProfilerItems
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ProfilerItems = out
@@ -287,7 +291,7 @@ func (s *profiler) ListProfilers(ctx context.Context) (*operations.ListProfilers
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -311,7 +315,10 @@ func (s *profiler) UpdateProfiler(ctx context.Context, request operations.Update
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -334,6 +341,7 @@ func (s *profiler) UpdateProfiler(ctx context.Context, request operations.Update
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -350,7 +358,7 @@ func (s *profiler) UpdateProfiler(ctx context.Context, request operations.Update
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ProfilerItem
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ProfilerItem = out
@@ -362,7 +370,7 @@ func (s *profiler) UpdateProfiler(ctx context.Context, request operations.Update
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

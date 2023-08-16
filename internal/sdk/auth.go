@@ -71,7 +71,7 @@ func (s *auth) LogoutIDPUserAuth(ctx context.Context, request operations.LogoutI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Success
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Success = out
@@ -85,7 +85,7 @@ func (s *auth) LogoutIDPUserAuth(ctx context.Context, request operations.LogoutI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -141,7 +141,7 @@ func (s *auth) GetRequestAuth(ctx context.Context, request operations.GetRequest
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Success
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Success = out
@@ -155,7 +155,7 @@ func (s *auth) GetRequestAuth(ctx context.Context, request operations.GetRequest
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +211,7 @@ func (s *auth) GetIDPAuth(ctx context.Context, request operations.GetIDPAuthRequ
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Success
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Success = out
@@ -221,7 +221,7 @@ func (s *auth) GetIDPAuth(ctx context.Context, request operations.GetIDPAuthRequ
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -279,7 +279,7 @@ func (s *auth) GetCriblMetadata(ctx context.Context) (*operations.GetCriblMetada
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -332,7 +332,7 @@ func (s *auth) GetRedirectInfo(ctx context.Context) (*operations.GetRedirectInfo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RedirectInfo
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RedirectInfo = out
@@ -342,7 +342,7 @@ func (s *auth) GetRedirectInfo(ctx context.Context) (*operations.GetRedirectInfo
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -395,7 +395,7 @@ func (s *auth) ListAuthGroup(ctx context.Context) (*operations.ListAuthGroupResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CrudEntityBases
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.CrudEntityBases = out
@@ -407,7 +407,7 @@ func (s *auth) ListAuthGroup(ctx context.Context) (*operations.ListAuthGroupResp
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -428,7 +428,10 @@ func (s *auth) LoginAuthToken(ctx context.Context, request shared.LoginInfo) (*o
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -451,6 +454,7 @@ func (s *auth) LoginAuthToken(ctx context.Context, request shared.LoginInfo) (*o
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -467,7 +471,7 @@ func (s *auth) LoginAuthToken(ctx context.Context, request shared.LoginInfo) (*o
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.AuthToken
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.AuthToken = out
@@ -481,7 +485,7 @@ func (s *auth) LoginAuthToken(ctx context.Context, request shared.LoginInfo) (*o
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -533,7 +537,7 @@ func (s *auth) LogoutUserAuth(ctx context.Context) (*operations.LogoutUserAuthRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Success
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Success = out
@@ -543,7 +547,7 @@ func (s *auth) LogoutUserAuth(ctx context.Context) (*operations.LogoutUserAuthRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -599,7 +603,7 @@ func (s *auth) LogoutRedirectUserAuth(ctx context.Context) (*operations.LogoutRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Success
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Success = out
@@ -619,7 +623,10 @@ func (s *auth) PostRequestAuth(ctx context.Context, request operations.PostReque
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -642,6 +649,7 @@ func (s *auth) PostRequestAuth(ctx context.Context, request operations.PostReque
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -658,7 +666,7 @@ func (s *auth) PostRequestAuth(ctx context.Context, request operations.PostReque
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Success
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Success = out
@@ -672,7 +680,7 @@ func (s *auth) PostRequestAuth(ctx context.Context, request operations.PostReque
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -692,7 +700,10 @@ func (s *auth) LogoutRequestUserAuth(ctx context.Context, request shared.LogoutR
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -715,6 +726,7 @@ func (s *auth) LogoutRequestUserAuth(ctx context.Context, request shared.LogoutR
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -731,7 +743,7 @@ func (s *auth) LogoutRequestUserAuth(ctx context.Context, request shared.LogoutR
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Success
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Success = out
@@ -745,7 +757,7 @@ func (s *auth) LogoutRequestUserAuth(ctx context.Context, request shared.LogoutR
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -72,7 +72,7 @@ func (s *workers) GetWorkerEdgeNodesCount(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.WorkerEdgeNodes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.WorkerEdgeNodes = out
@@ -84,7 +84,7 @@ func (s *workers) GetWorkerEdgeNodesCount(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -141,7 +141,7 @@ func (s *workers) ListWorkerEdgeNodes(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.MasterWorkerEntries
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.MasterWorkerEntries = out
@@ -153,7 +153,7 @@ func (s *workers) ListWorkerEdgeNodes(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -206,7 +206,7 @@ func (s *workers) RestartsWorkerEdgeNodes(ctx context.Context) (*operations.Rest
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.RestartResponses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.RestartResponses = out
@@ -218,7 +218,7 @@ func (s *workers) RestartsWorkerEdgeNodes(ctx context.Context) (*operations.Rest
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

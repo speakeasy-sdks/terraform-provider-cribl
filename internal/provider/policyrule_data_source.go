@@ -110,6 +110,9 @@ func (r *PolicyRuleDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	res, err := r.client.Policies.GetPolicyRule(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

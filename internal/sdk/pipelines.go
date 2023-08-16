@@ -71,7 +71,7 @@ func (s *pipelines) DeletePipelineID(ctx context.Context, request operations.Del
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Pipelines
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Pipelines = out
@@ -83,7 +83,7 @@ func (s *pipelines) DeletePipelineID(ctx context.Context, request operations.Del
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -139,7 +139,7 @@ func (s *pipelines) GetPipelineID(ctx context.Context, request operations.GetPip
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Pipelines
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Pipelines = out
@@ -151,7 +151,7 @@ func (s *pipelines) GetPipelineID(ctx context.Context, request operations.GetPip
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -204,7 +204,7 @@ func (s *pipelines) ListPipelineObject(ctx context.Context) (*operations.ListPip
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Pipelines
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Pipelines = out
@@ -216,7 +216,7 @@ func (s *pipelines) ListPipelineObject(ctx context.Context) (*operations.ListPip
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -237,7 +237,10 @@ func (s *pipelines) PostCreatePipeline(ctx context.Context, request shared.Pipel
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -260,6 +263,7 @@ func (s *pipelines) PostCreatePipeline(ctx context.Context, request shared.Pipel
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -276,7 +280,7 @@ func (s *pipelines) PostCreatePipeline(ctx context.Context, request shared.Pipel
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Pipelines
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Pipelines = out
@@ -288,7 +292,7 @@ func (s *pipelines) PostCreatePipeline(ctx context.Context, request shared.Pipel
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -312,7 +316,10 @@ func (s *pipelines) UpdatePipelineID(ctx context.Context, request operations.Upd
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -335,6 +342,7 @@ func (s *pipelines) UpdatePipelineID(ctx context.Context, request operations.Upd
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -351,7 +359,7 @@ func (s *pipelines) UpdatePipelineID(ctx context.Context, request operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Pipelines
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Pipelines = out
@@ -363,7 +371,7 @@ func (s *pipelines) UpdatePipelineID(ctx context.Context, request operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

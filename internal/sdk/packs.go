@@ -35,7 +35,10 @@ func (s *packs) ClonePack(ctx context.Context, request shared.PackClone) (*opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *packs) ClonePack(ctx context.Context, request shared.PackClone) (*opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *packs) ClonePack(ctx context.Context, request shared.PackClone) (*opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PackInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PackInfos = out
@@ -86,7 +90,7 @@ func (s *packs) ClonePack(ctx context.Context, request shared.PackClone) (*opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -146,7 +150,7 @@ func (s *packs) ExportPack(ctx context.Context, request operations.ExportPackReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PackInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PackInfos = out
@@ -158,7 +162,7 @@ func (s *packs) ExportPack(ctx context.Context, request operations.ExportPackReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -179,7 +183,10 @@ func (s *packs) InstallPack(ctx context.Context, request shared.CrudEntityBase) 
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -202,6 +209,7 @@ func (s *packs) InstallPack(ctx context.Context, request shared.CrudEntityBase) 
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -218,7 +226,7 @@ func (s *packs) InstallPack(ctx context.Context, request shared.CrudEntityBase) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PackInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PackInfos = out
@@ -230,7 +238,7 @@ func (s *packs) InstallPack(ctx context.Context, request shared.CrudEntityBase) 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -283,7 +291,7 @@ func (s *packs) ListPacks(ctx context.Context) (*operations.ListPacksResponse, e
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PackInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PackInfos = out
@@ -295,7 +303,7 @@ func (s *packs) ListPacks(ctx context.Context) (*operations.ListPacksResponse, e
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -351,7 +359,7 @@ func (s *packs) UninstallPack(ctx context.Context, request operations.UninstallP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PackInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PackInfos = out
@@ -363,7 +371,7 @@ func (s *packs) UninstallPack(ctx context.Context, request operations.UninstallP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -423,7 +431,7 @@ func (s *packs) UpgradePack(ctx context.Context, request operations.UpgradePackR
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PackInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PackInfos = out
@@ -435,7 +443,7 @@ func (s *packs) UpgradePack(ctx context.Context, request operations.UpgradePackR
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -492,7 +500,7 @@ func (s *packs) UploadPack(ctx context.Context, request operations.UploadPackReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PackInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PackInfos = out
@@ -504,7 +512,7 @@ func (s *packs) UploadPack(ctx context.Context, request operations.UploadPackReq
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

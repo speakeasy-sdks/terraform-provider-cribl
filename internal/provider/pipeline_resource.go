@@ -174,6 +174,9 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
 	res, err := r.client.Pipelines.PostCreatePipeline(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -219,6 +222,9 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
 	res, err := r.client.Pipelines.GetPipelineID(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -255,6 +261,9 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	res, err := r.client.Pipelines.UpdatePipelineID(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -300,6 +309,9 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
 	res, err := r.client.Pipelines.DeletePipelineID(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

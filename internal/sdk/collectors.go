@@ -71,7 +71,7 @@ func (s *collectors) GetCollector(ctx context.Context, request operations.GetCol
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Collectors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Collectors = out
@@ -83,7 +83,7 @@ func (s *collectors) GetCollector(ctx context.Context, request operations.GetCol
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -136,7 +136,7 @@ func (s *collectors) ListCollectorObject(ctx context.Context) (*operations.ListC
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Collectors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Collectors = out
@@ -148,7 +148,7 @@ func (s *collectors) ListCollectorObject(ctx context.Context) (*operations.ListC
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

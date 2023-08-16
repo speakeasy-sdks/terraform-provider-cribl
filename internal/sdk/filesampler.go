@@ -71,7 +71,7 @@ func (s *fileSampler) ListBytes(ctx context.Context, request operations.ListByte
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.SampleFiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.SampleFiles = out
@@ -83,7 +83,7 @@ func (s *fileSampler) ListBytes(ctx context.Context, request operations.ListByte
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

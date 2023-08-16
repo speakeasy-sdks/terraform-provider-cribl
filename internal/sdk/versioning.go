@@ -71,7 +71,7 @@ func (s *versioning) GetCountFile(ctx context.Context, request operations.GetCou
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.CountFile
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.CountFile = out
@@ -83,7 +83,7 @@ func (s *versioning) GetCountFile(ctx context.Context, request operations.GetCou
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -104,7 +104,10 @@ func (s *versioning) CreateCommit(ctx context.Context, request shared.GitCommitP
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -127,6 +130,7 @@ func (s *versioning) CreateCommit(ctx context.Context, request shared.GitCommitP
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -143,7 +147,7 @@ func (s *versioning) CreateCommit(ctx context.Context, request shared.GitCommitP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GitCommit
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GitCommit = out
@@ -155,7 +159,7 @@ func (s *versioning) CreateCommit(ctx context.Context, request shared.GitCommitP
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -208,7 +212,7 @@ func (s *versioning) GetVersioning(ctx context.Context) (*operations.GetVersioni
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GitInfos
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GitInfos = out
@@ -220,7 +224,7 @@ func (s *versioning) GetVersioning(ctx context.Context) (*operations.GetVersioni
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -277,7 +281,7 @@ func (s *versioning) GetLogandTextualDiff(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.TextualDiff
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.TextualDiff = out
@@ -289,7 +293,7 @@ func (s *versioning) GetLogandTextualDiff(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -346,7 +350,7 @@ func (s *versioning) GetTextualDiff(ctx context.Context, request operations.GetT
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.TextualDiff
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.TextualDiff = out
@@ -358,7 +362,7 @@ func (s *versioning) GetTextualDiff(ctx context.Context, request operations.GetT
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -415,7 +419,7 @@ func (s *versioning) GetWorkingTree(ctx context.Context, request operations.GetW
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GitStatusResults
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GitStatusResults = out
@@ -427,7 +431,7 @@ func (s *versioning) GetWorkingTree(ctx context.Context, request operations.GetW
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -480,7 +484,7 @@ func (s *versioning) ListBranches(ctx context.Context) (*operations.ListBranches
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Branches
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Branches = out
@@ -492,7 +496,7 @@ func (s *versioning) ListBranches(ctx context.Context) (*operations.ListBranches
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -549,7 +553,7 @@ func (s *versioning) ListChangedFiles(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ChangedFiles
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ChangedFiles = out
@@ -561,7 +565,7 @@ func (s *versioning) ListChangedFiles(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -614,7 +618,7 @@ func (s *versioning) PushCurrentConfig(ctx context.Context) (*operations.PushCur
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.PushConfig
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.PushConfig = out
@@ -626,7 +630,7 @@ func (s *versioning) PushCurrentConfig(ctx context.Context) (*operations.PushCur
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -679,7 +683,7 @@ func (s *versioning) SyncRemoteRepo(ctx context.Context) (*operations.SyncRemote
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.GitStatusResults
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.GitStatusResults = out
@@ -691,7 +695,7 @@ func (s *versioning) SyncRemoteRepo(ctx context.Context) (*operations.SyncRemote
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -71,7 +71,7 @@ func (s *routes) GetRouteListID(ctx context.Context, request operations.GetRoute
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Routes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Routes = out
@@ -83,7 +83,7 @@ func (s *routes) GetRouteListID(ctx context.Context, request operations.GetRoute
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -136,7 +136,7 @@ func (s *routes) ListRouteLists(ctx context.Context) (*operations.ListRouteLists
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Routes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Routes = out
@@ -148,7 +148,7 @@ func (s *routes) ListRouteLists(ctx context.Context) (*operations.ListRouteLists
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -172,7 +172,10 @@ func (s *routes) UpdateRouteObject(ctx context.Context, request operations.Updat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -195,6 +198,7 @@ func (s *routes) UpdateRouteObject(ctx context.Context, request operations.Updat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -211,7 +215,7 @@ func (s *routes) UpdateRouteObject(ctx context.Context, request operations.Updat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Routes
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Routes = out
@@ -223,7 +227,7 @@ func (s *routes) UpdateRouteObject(ctx context.Context, request operations.Updat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

@@ -69,7 +69,7 @@ func (s *uiState) GetUIState(ctx context.Context, request operations.GetUIStateR
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.UIStates
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.UIStates = out
@@ -81,7 +81,7 @@ func (s *uiState) GetUIState(ctx context.Context, request operations.GetUIStateR
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -105,7 +105,10 @@ func (s *uiState) UpdateUIState(ctx context.Context, request operations.UpdateUI
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -128,6 +131,7 @@ func (s *uiState) UpdateUIState(ctx context.Context, request operations.UpdateUI
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -144,7 +148,7 @@ func (s *uiState) UpdateUIState(ctx context.Context, request operations.UpdateUI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.UIStates
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.UIStates = out
@@ -156,7 +160,7 @@ func (s *uiState) UpdateUIState(ctx context.Context, request operations.UpdateUI
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

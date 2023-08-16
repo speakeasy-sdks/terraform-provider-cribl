@@ -36,7 +36,10 @@ func (s *licenses) CreateLicense(ctx context.Context, request shared.License) (*
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -59,6 +62,7 @@ func (s *licenses) CreateLicense(ctx context.Context, request shared.License) (*
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -75,7 +79,7 @@ func (s *licenses) CreateLicense(ctx context.Context, request shared.License) (*
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.License
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.License = out
@@ -87,7 +91,7 @@ func (s *licenses) CreateLicense(ctx context.Context, request shared.License) (*
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -143,7 +147,7 @@ func (s *licenses) DeleteLicense(ctx context.Context, request operations.DeleteL
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.License
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.License = out
@@ -155,7 +159,7 @@ func (s *licenses) DeleteLicense(ctx context.Context, request operations.DeleteL
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -211,7 +215,7 @@ func (s *licenses) GetLicense(ctx context.Context, request operations.GetLicense
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.License
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.License = out
@@ -223,7 +227,7 @@ func (s *licenses) GetLicense(ctx context.Context, request operations.GetLicense
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -276,7 +280,7 @@ func (s *licenses) ListLicenseUsageMetrics(ctx context.Context) (*operations.Lis
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DailyMetrics
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DailyMetrics = out
@@ -288,7 +292,7 @@ func (s *licenses) ListLicenseUsageMetrics(ctx context.Context) (*operations.Lis
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
@@ -341,7 +345,7 @@ func (s *licenses) ListLicenses(ctx context.Context) (*operations.ListLicensesRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Licenses
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Licenses = out
@@ -353,7 +357,7 @@ func (s *licenses) ListLicenses(ctx context.Context) (*operations.ListLicensesRe
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out

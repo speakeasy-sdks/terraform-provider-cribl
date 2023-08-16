@@ -67,7 +67,7 @@ func (s *edgeEvents) ListConfiguredCollectors(ctx context.Context) (*operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConfiguredCollectors
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConfiguredCollectors = out
@@ -79,7 +79,7 @@ func (s *edgeEvents) ListConfiguredCollectors(ctx context.Context) (*operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.Error
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.Error = out
