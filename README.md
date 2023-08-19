@@ -10,7 +10,7 @@ terraform {
   required_providers {
     Cribl = {
       source  = "cribl-dev/Cribl"
-      version = "1.4.0"
+      version = "1.4.1"
     }
   }
 }
