@@ -380,6 +380,7 @@ paths:
 
       operationId: createDatasetProviderType
       x-speakeasy-name-override: createProviderType
+      x-speakeasy-entity-operation: DataSetsProviderType#create
       summary: Create DatasetProviderType
       description: Create DatasetProviderType
       requestBody:
@@ -413,6 +414,7 @@ paths:
         - datasets
       operationId: getDatasetProviderType
       x-speakeasy-name-override: getProviderType
+      x-speakeasy-entity-operation: DataSetsProviderType#get
       summary: Get DatasetProviderType by ID
       description: Get DatasetProviderType by ID
       parameters:
@@ -447,6 +449,7 @@ paths:
 
       operationId: updateDatasetProviderType
       x-speakeasy-name-override: updateProviderType
+      x-speakeasy-entity-operation: DataSetsProviderType#update
       summary: Update DatasetProviderType
       description: Update DatasetProviderType
       parameters:
@@ -486,6 +489,7 @@ paths:
         - datasets
       operationId: deleteDatasetProviderType
       x-speakeasy-name-override: deleteProviderType
+      x-speakeasy-entity-operation: DataSetsProviderType#delete
       summary: Delete DatasetProviderType
       description: Delete DatasetProviderType
       parameters:
@@ -543,7 +547,7 @@ paths:
     post:
       tags:
         - datasets
-
+      x-speakeasy-entity-operation: DataSet#create
       operationId: createDatasetObject
       summary: Create Dataset
       description: Create Dataset
@@ -576,7 +580,7 @@ paths:
     get:
       tags:
         - datasets
-
+      x-speakeasy-entity-operation: DataSet#get
       operationId: getDatasetObject
       summary: Get Dataset by ID
       description: Get Dataset by ID
@@ -609,7 +613,7 @@ paths:
     patch:
       tags:
         - datasets
-
+      x-speakeasy-entity-operation: DataSet#update
       operationId: updateDatasetObject
       summary: Update Dataset
       description: Update Dataset
@@ -648,7 +652,7 @@ paths:
     delete:
       tags:
         - datasets
-
+      x-speakeasy-entity-operation: DataSet#delete
       operationId: deleteDatasetObject
       summary: Delete Dataset
       description: Delete Dataset
@@ -682,7 +686,6 @@ paths:
     get:
       tags:
         - features
-
       operationId: getFeature
       summary: Get feature by Id 
       description: Get feature by id (i.e. 'type/name`)
@@ -773,6 +776,7 @@ paths:
         - fleet-mappings
 
       operationId: createFleetMapping
+      x-speakeasy-entity-operation: FleetMapping#create
       summary: Create MappingRuleset
       description: Create MappingRuleset
       requestBody:
@@ -787,7 +791,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -806,6 +810,7 @@ paths:
         - fleet-mappings
 
       operationId: getMappingRuleset
+      x-speakeasy-entity-operation: MappingRuleset#get
       summary: Get MappingRuleset by ID
       description: Get MappingRuleset by ID
       parameters:
@@ -821,7 +826,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -839,6 +844,7 @@ paths:
         - fleet-mappings
 
       operationId: updateMappingRulesets
+      x-speakeasy-entity-operation: MappingRulesets#update
       summary: Update MappingRuleset
       description: Update MappingRuleset
       parameters:
@@ -860,7 +866,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -878,6 +884,7 @@ paths:
         - fleet-mappings
 
       operationId: deleteMappingRuleset
+      x-speakeasy-entity-operation: MappingRuleset#delete
       summary: Delete MappingRuleset
       description: Delete MappingRuleset
       parameters:
@@ -893,7 +900,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -953,6 +960,7 @@ paths:
         - groups
 
       operationId: createConfigGroup
+      x-speakeasy-entity-operation: ConfigGroup#create
       summary: Create ConfigGroup
       description: Create ConfigGroup
       requestBody:
@@ -986,6 +994,7 @@ paths:
         - groups
 
       operationId: getConfigGroup
+      x-speakeasy-entity-operation: ConfigGroup#get
       summary: Get a specific ConfigGroup object
       description: Get a specific ConfigGroup object
       deprecated: false
@@ -1027,6 +1036,7 @@ paths:
         - groups
 
       operationId: updateConfigGroup
+      x-speakeasy-entity-operation: ConfigGroup#update
       summary: Update ConfigGroup
       description: Update ConfigGroup
       parameters:
@@ -1066,6 +1076,7 @@ paths:
         - groups
 
       operationId: deleteConfigGroup
+      x-speakeasy-entity-operation: ConfigGroup#delete
       summary: Delete ConfigGroup
       description: Delete ConfigGroup
       parameters:
@@ -1101,6 +1112,7 @@ paths:
 
       operationId: getGroupBundle
       x-speakeasy-name-override: getConfigVersion
+      x-speakeasy-entity-operation: GroupBundle#get
       summary: Get effective bundle version for given Group
       description: Get effective bundle version for given Group
       deprecated: false
@@ -1207,7 +1219,7 @@ paths:
     post:
       tags:
         - keys
-
+      x-speakeasy-entity-operation: Keys#create
       operationId: createKeyMetadataEntity
       summary: Create KeyMetadataEntity
       description: Create KeyMetadataEntity
@@ -1223,7 +1235,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/KeyMetadataEntities"
+                $ref: "#/components/schemas/KeyMetadataEntity"
         "401":
           description: Unauthorized
           content:
@@ -1240,7 +1252,7 @@ paths:
     get:
       tags:
         - keys
-
+      x-speakeasy-entity-operation: Keys#get
       operationId: getKeyMetadataEntity
       summary: Get KeyMetadataEntity by ID
       description: Get KeyMetadataEntity by ID
@@ -1257,7 +1269,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/KeyMetadataEntities"
+                $ref: "#/components/schemas/KeyMetadataEntity"
         "401":
           description: Unauthorized
           content:
@@ -1273,7 +1285,7 @@ paths:
     patch:
       tags:
         - keys
-
+      x-speakeasy-entity-operation: Keys#update
       operationId: updateKeyMetadataEntity
       summary: Update KeyMetadataEntity
       description: Update KeyMetadataEntity
@@ -1296,7 +1308,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/KeyMetadataEntities"
+                $ref: "#/components/schemas/KeyMetadataEntity"
         "401":
           description: Unauthorized
           content:
@@ -1312,7 +1324,7 @@ paths:
     delete:
       tags:
         - keys
-
+      x-speakeasy-entity-operation: Keys#delete
       operationId: deleteKeyMetadataEntity
       summary: Delete KeyMetadataEntity
       description: Delete KeyMetadataEntity
@@ -1329,7 +1341,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/KeyMetadataEntities"
+                $ref: "#/components/schemas/KeyMetadataEntity"
         "401":
           description: Unauthorized
           content:
@@ -1374,6 +1386,7 @@ paths:
         - mappings
 
       operationId: createMappingRuleset
+      x-speakeasy-entity-operation: MappingRuleset#create
       summary: Create MappingRuleset
       description: Create MappingRuleset
       requestBody:
@@ -1388,7 +1401,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -1407,6 +1420,7 @@ paths:
         - mappings
 
       operationId: getMappingRulesetID
+      x-speakeasy-entity-operation: MappingRuleset#get
       summary: Get MappingRuleset by ID
       description: Get MappingRuleset by ID
       parameters:
@@ -1422,7 +1436,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -1440,6 +1454,7 @@ paths:
         - mappings
 
       operationId: updateMappingRuleset
+      x-speakeasy-entity-operation: MappingRuleset#update
       summary: Update MappingRuleset
       description: Update MappingRuleset
       parameters:
@@ -1461,7 +1476,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -1479,6 +1494,7 @@ paths:
         - mappings
 
       operationId: deleteMappingRulesets
+      x-speakeasy-entity-operation: MappingRulesets#delete
       summary: Delete MappingRuleset
       description: Delete MappingRuleset
       parameters:
@@ -1494,7 +1510,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MappingRulesets"
+                $ref: "#/components/schemas/MappingRuleset"
         "401":
           description: Unauthorized
           content:
@@ -1537,7 +1553,7 @@ paths:
     post:
       tags:
         - messages
-
+      x-speakeasy-entity-operation: BulletinMessage#create
       operationId: createBulletinMessage
       summary: Create BulletinMessage
       description: Create BulletinMessage
@@ -1570,7 +1586,7 @@ paths:
     get:
       tags:
         - messages
-
+      x-speakeasy-entity-operation: BulletinMessage#get
       operationId: getBulletinMessage
       summary: Get BulletinMessage by ID
       description: Get BulletinMessage by ID
@@ -1603,7 +1619,7 @@ paths:
     delete:
       tags:
         - messages
-
+      x-speakeasy-entity-operation: BulletinMessage#delete
       operationId: deleteBulletinMessage
       summary: Delete BulletinMessage
       description: Delete BulletinMessage
@@ -1665,6 +1681,7 @@ paths:
         - notification-targets
 
       operationId: createNotificationTarget
+      x-speakeasy-entity-operation: NotificationTarget#create
       summary: Create NotificationTarget
       description: Create NotificationTarget
       requestBody:
@@ -1679,7 +1696,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NotificationTargets"
+                $ref: "#/components/schemas/NotificationTarget"
         "401":
           description: Unauthorized
           content:
@@ -1698,6 +1715,7 @@ paths:
         - notification-targets
 
       operationId: getNotificationTarget
+      x-speakeasy-entity-operation: NotificationTarget#get
       summary: Get NotificationTarget by ID
       description: Get NotificationTarget by ID
       parameters:
@@ -1713,7 +1731,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NotificationTargets"
+                $ref: "#/components/schemas/NotificationTarget"
         "401":
           description: Unauthorized
           content:
@@ -1731,6 +1749,7 @@ paths:
         - notification-targets
 
       operationId: updatetNotificationTarget
+      x-speakeasy-entity-operation: NotificationTarget#update
       summary: Update NotificationTarget
       description: Update NotificationTarget
       parameters:
@@ -1752,7 +1771,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NotificationTargets"
+                $ref: "#/components/schemas/NotificationTarget"
         "401":
           description: Unauthorized
           content:
@@ -1770,6 +1789,7 @@ paths:
         - notification-targets
 
       operationId: deletetNotificationTarget
+      x-speakeasy-entity-operation: NotificationTarget#delete
       summary: Delete NotificationTarget
       description: Delete NotificationTarget
       parameters:
@@ -1785,7 +1805,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NotificationTargets"
+                $ref: "#/components/schemas/NotificationTarget"
         "401":
           description: Unauthorized
           content:
@@ -1999,6 +2019,7 @@ paths:
         - roles
 
       operationId: createRole
+      x-speakeasy-entity-operation: Role#create
       summary: Create Role
       description: Create Role
       requestBody:
@@ -2013,7 +2034,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Roles"
+                $ref: "#/components/schemas/Role"
         "401":
           description: Unauthorized
           content:
@@ -2032,6 +2053,7 @@ paths:
         - roles
 
       operationId: getRole
+      x-speakeasy-entity-operation: Role#get
       summary: Get Role by ID
       description: Get Role by ID
       parameters:
@@ -2047,7 +2069,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Roles"
+                $ref: "#/components/schemas/Role"
         "401":
           description: Unauthorized
           content:
@@ -2065,6 +2087,7 @@ paths:
         - roles
 
       operationId: updateRole
+      x-speakeasy-entity-operation: Role#update
       summary: Update Role
       description: Update Role
       parameters:
@@ -2086,7 +2109,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Roles"
+                $ref: "#/components/schemas/Role"
         "401":
           description: Unauthorized
           content:
@@ -2104,6 +2127,7 @@ paths:
         - roles
 
       operationId: deleteRole
+      x-speakeasy-entity-operation: Role#delete
       summary: Delete Role
       description: Delete Role
       parameters:
@@ -2119,7 +2143,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Roles"
+                $ref: "#/components/schemas/Role"
         "401":
           description: Unauthorized
           content:
@@ -2164,6 +2188,7 @@ paths:
         - saved-jobs
 
       operationId: createSavedJobs
+      x-speakeasy-entity-operation: SavedJobs#create
       summary: Create SavedJob
       description: Create SavedJob
       requestBody:
@@ -2178,7 +2203,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SavedJobs"
+                $ref: "#/components/schemas/SavedJob"
         "401":
           description: Unauthorized
           content:
@@ -2197,6 +2222,7 @@ paths:
         - saved-jobs
 
       operationId: getSavedJob
+      x-speakeasy-entity-operation: SavedJob#get
       summary: Get SavedJob by ID
       description: Get SavedJob by ID
       parameters:
@@ -2212,7 +2238,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SavedJobs"
+                $ref: "#/components/schemas/SavedJob"
         "401":
           description: Unauthorized
           content:
@@ -2230,6 +2256,7 @@ paths:
         - saved-jobs
 
       operationId: updateSavedJob
+      x-speakeasy-entity-operation: SavedJob#update
       summary: Update SavedJob
       description: Update SavedJob
       parameters:
@@ -2251,7 +2278,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SavedJobs"
+                $ref: "#/components/schemas/SavedJob"
         "401":
           description: Unauthorized
           content:
@@ -2269,6 +2296,7 @@ paths:
         - saved-jobs
 
       operationId: deleteSavedJob
+      x-speakeasy-entity-operation: SavedJob#delete
       summary: Delete SavedJob
       description: Delete SavedJob
       parameters:
@@ -2284,7 +2312,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SavedJobs"
+                $ref: "#/components/schemas/SavedJob"
         "401":
           description: Unauthorized
           content:
@@ -2329,6 +2357,7 @@ paths:
         - savedQueries
 
       operationId: createSavedQueries
+      x-speakeasy-entity-operation: SavedQuery#create
       summary: Create SavedQuery
       description: Create SavedQuery
       requestBody:
@@ -2362,6 +2391,7 @@ paths:
         - savedQueries
 
       operationId: getSavedQuery
+      x-speakeasy-entity-operation: SavedQuery#get
       summary: Get SavedQuery by ID
       description: Get SavedQuery by ID
       parameters:
@@ -2395,6 +2425,7 @@ paths:
         - savedQueries
 
       operationId: updateSavedQueries
+      x-speakeasy-entity-operation: SavedQuery#update
       summary: Update SavedQuery
       description: Update SavedQuery
       parameters:
@@ -2434,6 +2465,7 @@ paths:
         - savedQueries
 
       operationId: deleteSavedQueries
+      x-speakeasy-entity-operation: SavedQuery#delete
       summary: Delete SavedQuery
       description: Delete SavedQuery
       parameters:
@@ -2661,7 +2693,7 @@ paths:
     post:
       tags:
         - search
-
+      x-speakeasy-entity-operation: SearchJob#create
       operationId: createSearchJob
       summary: Create SearchJob
       description: Create SearchJob
@@ -2694,7 +2726,7 @@ paths:
     get:
       tags:
         - search
-
+      x-speakeasy-entity-operation: SearchJob#get
       operationId: getSearchJob
       x-speakeasy-name-override: getJob
       summary: Get SearchJob by ID
@@ -2728,7 +2760,7 @@ paths:
     patch:
       tags:
         - search
-
+      x-speakeasy-entity-operation: SearchJob#update
       operationId: updateSearchJob
       summary: Update SearchJob
       description: Update SearchJob
@@ -2767,7 +2799,7 @@ paths:
     delete:
       tags:
         - search
-
+      x-speakeasy-entity-operation: SearchJob#delete
       operationId: deleteSearchJob
       summary: Delete SearchJob
       description: Delete SearchJob
@@ -3076,6 +3108,7 @@ paths:
         - users
 
       operationId: getUserID
+      x-speakeasy-entity-operation: User#get
       summary: Get User by ID
       description: Get User by ID
       parameters:
@@ -3149,6 +3182,7 @@ paths:
         - users
 
       operationId: deleteUserID
+      x-speakeasy-entity-operation: User#delete
       summary: Delete User
       description: Delete User
       parameters:
@@ -3184,6 +3218,7 @@ paths:
 
       operationId: updateUserObject
       x-speakeasy-name-override: updateInfo
+      x-speakeasy-entity-operation: User#update
       summary: Update User except for their roles
       description: Update User except for their roles
       deprecated: false
@@ -3243,6 +3278,7 @@ paths:
         - appscope-configs
 
       operationId: createAppscopeLibEntry
+      x-speakeasy-entity-operation: AppscopeLibEntry#create
       summary: Create AppscopeLibEntry
       description: Create AppscopeLibEntry
       requestBody:
@@ -3276,6 +3312,7 @@ paths:
         - appscope-configs
 
       operationId: getAppscopeLibEntry
+      x-speakeasy-entity-operation: AppscopeLibEntry#get
       summary: Get AppscopeLibEntry by ID
       description: Get AppscopeLibEntry by ID
       parameters:
@@ -3309,6 +3346,7 @@ paths:
         - appscope-configs
 
       operationId: updateAppscopeLibEntry
+      x-speakeasy-entity-operation: AppscopeLibEntry#update
       summary: Update AppscopeLibEntry
       description: Update AppscopeLibEntry
       parameters:
@@ -3348,6 +3386,7 @@ paths:
         - appscope-configs
 
       operationId: deleteAppscopeLibEntry
+      x-speakeasy-entity-operation: AppscopeLibEntry#delete
       summary: Delete AppscopeLibEntry
       description: Delete AppscopeLibEntry
       parameters:
@@ -3408,6 +3447,7 @@ paths:
         - grokfiles
 
       operationId: createGrokFile
+      x-speakeasy-entity-operation: GrokFile#create
       summary: Create GrokFile
       description: Create GrokFile
       requestBody:
@@ -3441,6 +3481,7 @@ paths:
         - grokfiles
 
       operationId: getGrokFile
+      x-speakeasy-entity-operation: GrokFile#get
       summary: Get GrokFile by ID
       description: Get GrokFile by ID
       parameters:
@@ -3474,6 +3515,7 @@ paths:
         - grokfiles
 
       operationId: updateGrokFile
+      x-speakeasy-entity-operation: GrokFile#update
       summary: Update GrokFile
       description: Update GrokFile
       parameters:
@@ -3513,6 +3555,7 @@ paths:
         - grokfiles
 
       operationId: deleteGrokFile
+      x-speakeasy-entity-operation: GrokFile#delete
       summary: Delete GrokFile
       description: Delete GrokFile
       parameters:
@@ -3573,6 +3616,7 @@ paths:
         - lookups
 
       operationId: createLookup
+      x-speakeasy-entity-operation: Lookup#create
       summary: Create LookupFile
       description: Create LookupFile
       requestBody:
@@ -3640,6 +3684,7 @@ paths:
         - lookups
 
       operationId: getLookup
+      x-speakeasy-entity-operation: Lookup#get
       summary: Get LookupFile by ID
       description: Get LookupFile by ID
       parameters:
@@ -3673,6 +3718,7 @@ paths:
         - lookups
 
       operationId: updateLookup
+      x-speakeasy-entity-operation: Lookup#update
       summary: Update LookupFile
       description: Update LookupFile
       parameters:
@@ -3712,6 +3758,7 @@ paths:
         - lookups
 
       operationId: deleteLookup
+      x-speakeasy-entity-operation: Lookup#delete
       summary: Delete LookupFile
       description: Delete LookupFile
       parameters:
@@ -3772,6 +3819,7 @@ paths:
         - parsers
 
       operationId: postParserObject
+      x-speakeasy-entity-operation: Parser#create
       summary: Create Parser
       description: Create Parser
       requestBody:
@@ -3805,6 +3853,7 @@ paths:
         - parsers
 
       operationId: getParserID
+      x-speakeasy-entity-operation: Parser#get
       summary: Get Parser by ID
       description: Get Parser by ID
       parameters:
@@ -3838,6 +3887,7 @@ paths:
         - parsers
 
       operationId: updateParserID
+      x-speakeasy-entity-operation: Parser#update
       summary: Update Parser
       description: Update Parser
       parameters:
@@ -3877,6 +3927,7 @@ paths:
         - parsers
 
       operationId: deleteParserID
+      x-speakeasy-entity-operation: Parser#delete
       summary: Delete Parser
       description: Delete Parser
       parameters:
@@ -3937,6 +3988,7 @@ paths:
         - regexes
 
       operationId: postRegexLibEntry
+      x-speakeasy-entity-operation: Regexes#create
       summary: Create RegexLibEntry
       description: Create RegexLibEntry
       requestBody:
@@ -3970,6 +4022,7 @@ paths:
         - regexes
 
       operationId: getRegexLibEntryID
+      x-speakeasy-entity-operation: Regexes#get
       summary: Get RegexLibEntry by ID
       description: Get RegexLibEntry by ID
       parameters:
@@ -4003,6 +4056,7 @@ paths:
         - regexes
 
       operationId: updateRegexLibEntry
+      x-speakeasy-entity-operation: Regexes#update
       summary: Update RegexLibEntry
       description: Update RegexLibEntry
       parameters:
@@ -4042,6 +4096,7 @@ paths:
         - regexes
 
       operationId: deleteRegexLibEntry
+      x-speakeasy-entity-operation: Regexes#delete
       summary: Delete RegexLibEntry
       description: Delete RegexLibEntry
       parameters:
@@ -4102,6 +4157,7 @@ paths:
         - samples
 
       operationId: postDataSample
+      x-speakeasy-entity-operation: DataSample#create
       summary: Create DataSample
       description: Create DataSample
       requestBody:
@@ -4116,7 +4172,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DataSamples"
+                $ref: "#/components/schemas/DataSample"
         "401":
           description: Unauthorized
           content:
@@ -4135,6 +4191,7 @@ paths:
         - samples
 
       operationId: getDataSampleID
+      x-speakeasy-entity-operation: DataSample#get
       summary: Get DataSample by ID
       description: Get DataSample by ID
       parameters:
@@ -4150,7 +4207,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DataSamples"
+                $ref: "#/components/schemas/DataSample"
         "401":
           description: Unauthorized
           content:
@@ -4168,6 +4225,7 @@ paths:
         - samples
 
       operationId: updateDataSampleID
+      x-speakeasy-entity-operation: DataSample#update
       summary: Update DataSample
       description: Update DataSample
       parameters:
@@ -4189,7 +4247,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DataSamples"
+                $ref: "#/components/schemas/DataSample"
         "401":
           description: Unauthorized
           content:
@@ -4207,6 +4265,7 @@ paths:
         - samples
 
       operationId: deleteDataSampleID
+      x-speakeasy-entity-operation: DataSample#delete
       summary: Delete DataSample
       description: Delete DataSample
       parameters:
@@ -4222,7 +4281,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DataSamples"
+                $ref: "#/components/schemas/DataSample"
         "401":
           description: Unauthorized
           content:
@@ -4311,6 +4370,7 @@ paths:
         - database-connections
 
       operationId: postDatabaseConnection
+      x-speakeasy-entity-operation: DatabaseConnection#create
       summary: Create DatabaseConnectionConfig
       description: Create DatabaseConnectionConfig
       requestBody:
@@ -4325,7 +4385,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatabaseConnectionConfigs"
+                $ref: "#/components/schemas/DatabaseConnectionConfig"
         "401":
           description: Unauthorized
           content:
@@ -4344,6 +4404,7 @@ paths:
         - database-connections
 
       operationId: getDatabaseConnectionConfigID
+      x-speakeasy-entity-operation: DatabaseConnectionConfig#get
       summary: Get DatabaseConnectionConfig by ID
       description: Get DatabaseConnectionConfig by ID
       parameters:
@@ -4359,7 +4420,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatabaseConnectionConfigs"
+                $ref: "#/components/schemas/DatabaseConnectionConfig"
         "401":
           description: Unauthorized
           content:
@@ -4377,6 +4438,7 @@ paths:
         - database-connections
 
       operationId: updateDatabaseConnectionConfigID
+      x-speakeasy-entity-operation: DatabaseConnectionConfig#update
       summary: Update DatabaseConnectionConfig
       description: Update DatabaseConnectionConfig
       parameters:
@@ -4398,7 +4460,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatabaseConnectionConfigs"
+                $ref: "#/components/schemas/DatabaseConnectionConfig"
         "401":
           description: Unauthorized
           content:
@@ -4416,6 +4478,7 @@ paths:
         - database-connections
 
       operationId: deleteDatabaseConnectionConfigID
+      x-speakeasy-entity-operation: DatabaseConnectionConfig#delete
       summary: Delete DatabaseConnectionConfig
       description: Delete DatabaseConnectionConfig
       parameters:
@@ -4431,7 +4494,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatabaseConnectionConfigs"
+                $ref: "#/components/schemas/DatabaseConnectionConfig"
         "401":
           description: Unauthorized
           content:
@@ -4510,6 +4573,7 @@ paths:
         - event_breaker_rules
 
       operationId: postEventBreaker
+      x-speakeasy-entity-operation: EventBreaker#create
       summary: Create Event Breaker Ruleset
       description: Create Event Breaker Ruleset
       requestBody:
@@ -4524,7 +4588,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EventBreakerRulesets"
+                $ref: "#/components/schemas/EventBreakerRuleset"
         "401":
           description: Unauthorized
           content:
@@ -4543,6 +4607,7 @@ paths:
         - event_breaker_rules
 
       operationId: getEventBreakerID
+      x-speakeasy-entity-operation: EventBreaker#get
       summary: Get Event Breaker Ruleset by ID
       description: Get Event Breaker Ruleset by ID
       parameters:
@@ -4558,7 +4623,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EventBreakerRulesets"
+                $ref: "#/components/schemas/EventBreakerRuleset"
         "401":
           description: Unauthorized
           content:
@@ -4576,6 +4641,7 @@ paths:
         - event_breaker_rules
 
       operationId: updateEventBreaker
+      x-speakeasy-entity-operation: EventBreaker#update
       summary: Update Event Breaker Ruleset
       description: Update Event Breaker Ruleset
       parameters:
@@ -4597,7 +4663,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EventBreakerRulesets"
+                $ref: "#/components/schemas/EventBreakerRuleset"
         "401":
           description: Unauthorized
           content:
@@ -4615,6 +4681,7 @@ paths:
         - event_breaker_rules
 
       operationId: deleteEventBreaker
+      x-speakeasy-entity-operation: EventBreaker#delete
       summary: Delete Event Breaker Ruleset
       description: Delete Event Breaker Ruleset
       parameters:
@@ -4630,7 +4697,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EventBreakerRulesets"
+                $ref: "#/components/schemas/EventBreakerRuleset"
         "401":
           description: Unauthorized
           content:
@@ -4675,6 +4742,7 @@ paths:
         - global_variables
 
       operationId: postGlobalVariable
+      x-speakeasy-entity-operation: GlobalVariable#create
       summary: Create Global Variable
       description: Create Global Variable
       requestBody:
@@ -4689,7 +4757,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GlobalVars"
+                $ref: "#/components/schemas/GlobalVar"
         "401":
           description: Unauthorized
           content:
@@ -4708,6 +4776,7 @@ paths:
         - global_variables
 
       operationId: getGlobalVariableID
+      x-speakeasy-entity-operation: GlobalVariable#get
       summary: Get Global Variable by ID
       description: Get Global Variable by ID
       parameters:
@@ -4723,7 +4792,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GlobalVars"
+                $ref: "#/components/schemas/GlobalVar"
         "401":
           description: Unauthorized
           content:
@@ -4741,6 +4810,7 @@ paths:
         - global_variables
 
       operationId: updateGlobalVariableID
+      x-speakeasy-entity-operation: GlobalVariable#update
       summary: Update Global Variable
       description: Update Global Variable
       parameters:
@@ -4762,7 +4832,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GlobalVars"
+                $ref: "#/components/schemas/GlobalVar"
         "401":
           description: Unauthorized
           content:
@@ -4780,6 +4850,7 @@ paths:
         - global_variables
 
       operationId: deleteGlobalVariableID
+      x-speakeasy-entity-operation: GlobalVariable#delete
       summary: Delete Global Variable
       description: Delete Global Variable
       parameters:
@@ -4795,7 +4866,176 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GlobalVars"
+                $ref: "#/components/schemas/GlobalVar"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /system/inputs:
+    get:
+      tags:
+        - inputs
+      x-speakeasy-group: InputObject
+      operationId: getInputObject
+      summary: Get a list of Input objects
+      description: Get a list of Input objects
+      responses:
+        "200":
+          description: a list of Input objects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Inputs"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - inputs
+
+      operationId: postInputObject
+      x-speakeasy-entity-operation: Input#create
+      summary: Create Input
+      description: Create Input
+      requestBody:
+        description: New Input object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Input"
+      responses:
+        "200":
+          description: a list of Input objects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Inputs"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/system/inputs/{id}":
+    get:
+      tags:
+        - inputs
+
+      operationId: getInputID
+      x-speakeasy-entity-operation: Input#get
+      summary: Get Input by ID
+      description: Get Input by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID
+      responses:
+        "200":
+          description: a list of Input objects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Input"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      tags:
+        - inputs
+
+      operationId: updateInputID
+      x-speakeasy-entity-operation: Input#update
+      summary: Update Input
+      description: Update Input
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID
+      requestBody:
+        description: Input object to be updated
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Input"
+      responses:
+        "200":
+          description: a list of Input objects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Inputs"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - inputs
+
+      operationId: deleteInputID
+      x-speakeasy-entity-operation: Input#delete
+      summary: Delete Input
+      description: Delete Input
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID
+      responses:
+        "200":
+          description: a list of Input objects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Input"
         "401":
           description: Unauthorized
           content:
@@ -4840,6 +5080,7 @@ paths:
         - outputs
 
       operationId: createOutputObject
+      x-speakeasy-entity-operation: Output#create
       summary: Create Output
       description: Create Output
       requestBody:
@@ -4854,7 +5095,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Outputs"
+                $ref: "#/components/schemas/Output"
         "401":
           description: Unauthorized
           content:
@@ -4873,6 +5114,7 @@ paths:
         - outputs
 
       operationId: getOutputID
+      x-speakeasy-entity-operation: Output#get
       summary: Get Output by ID
       description: Get Output by ID
       parameters:
@@ -4888,7 +5130,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Outputs"
+                $ref: "#/components/schemas/Output"
         "401":
           description: Unauthorized
           content:
@@ -4906,6 +5148,7 @@ paths:
         - outputs
 
       operationId: updateOutputID
+      x-speakeasy-entity-operation: Output#update
       summary: Update Output
       description: Update Output
       parameters:
@@ -4927,7 +5170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Outputs"
+                $ref: "#/components/schemas/Output"
         "401":
           description: Unauthorized
           content:
@@ -4945,6 +5188,7 @@ paths:
         - outputs
 
       operationId: deleteOutputID
+      x-speakeasy-entity-operation: Output#delete
       summary: Delete Output
       description: Delete Output
       parameters:
@@ -4960,7 +5204,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Outputs"
+                $ref: "#/components/schemas/Output"
         "401":
           description: Unauthorized
           content:
@@ -4980,6 +5224,7 @@ paths:
 
       operationId: deleteDestinationQueue
       x-speakeasy-name-override: deletePQ
+      x-speakeasy-entity-operation: OutputPQ#delete
       summary: Delete destination persistent queue
       description: Delete destination persistent queue
       deprecated: false
@@ -5173,6 +5418,7 @@ paths:
         - parquetschemas
 
       operationId: postSchema
+      x-speakeasy-entity-operation: ParquestSchema#create
       summary: Create Schema
       description: Create Schema
       requestBody:
@@ -5187,7 +5433,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SchemaLibEntries"
+                $ref: "#/components/schemas/SchemaLibEntry"
         "401":
           description: Unauthorized
           content:
@@ -5206,6 +5452,7 @@ paths:
         - parquetschemas
 
       operationId: getSchemaID
+      x-speakeasy-entity-operation: ParquestSchema#get
       summary: Get Schema by ID
       description: Get Schema by ID
       parameters:
@@ -5221,7 +5468,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SchemaLibEntries"
+                $ref: "#/components/schemas/SchemaLibEntry"
         "401":
           description: Unauthorized
           content:
@@ -5239,6 +5486,7 @@ paths:
         - parquetschemas
 
       operationId: updateSchemaID
+      x-speakeasy-entity-operation: ParquestSchema#update
       summary: Update Schema
       description: Update Schema
       parameters:
@@ -5260,7 +5508,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SchemaLibEntries"
+                $ref: "#/components/schemas/SchemaLibEntry"
         "401":
           description: Unauthorized
           content:
@@ -5278,6 +5526,7 @@ paths:
         - parquetschemas
 
       operationId: deleteSchemaID
+      x-speakeasy-entity-operation: ParquestSchema#delete
       summary: Delete Schema
       description: Delete Schema
       parameters:
@@ -5293,7 +5542,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SchemaLibEntries"
+                $ref: "#/components/schemas/SchemaLibEntry"
         "401":
           description: Unauthorized
           content:
@@ -5506,6 +5755,7 @@ paths:
         - profiler
 
       operationId: createProfiler
+      x-speakeasy-entity-operation: Profiler#create
       summary: Create ProfilerItem
       description: Create ProfilerItem
       requestBody:
@@ -5539,6 +5789,7 @@ paths:
         - profiler
 
       operationId: getProfiler
+      x-speakeasy-entity-operation: Profiler#get
       summary: Get ProfilerItem by ID
       description: Get ProfilerItem by ID
       parameters:
@@ -5572,6 +5823,7 @@ paths:
         - profiler
 
       operationId: updateProfiler
+      x-speakeasy-entity-operation: Profiler#update
       summary: Update ProfilerItem
       description: Update ProfilerItem
       parameters:
@@ -5611,6 +5863,7 @@ paths:
         - profiler
 
       operationId: deleteProfiler
+      x-speakeasy-entity-operation: Profiler#delete
       summary: Delete ProfilerItem
       description: Delete ProfilerItem
       parameters:
@@ -5776,6 +6029,7 @@ paths:
         - schemas
 
       operationId: createSchema
+      x-speakeasy-entity-operation: Schema#create
       summary: Create Schema
       description: Create Schema
       requestBody:
@@ -5809,6 +6063,7 @@ paths:
         - schemas
 
       operationId: getSchema
+      x-speakeasy-entity-operation: Schema#get
       summary: Get Schema by ID
       description: Get Schema by ID
       parameters:
@@ -5842,6 +6097,7 @@ paths:
         - schemas
 
       operationId: updateSchema
+      x-speakeasy-entity-operation: Schema#update
       summary: Update Schema
       description: Update Schema
       parameters:
@@ -5881,6 +6137,7 @@ paths:
         - schemas
 
       operationId: deleteSchema
+      x-speakeasy-entity-operation: Schema#delete
       summary: Delete Schema
       description: Delete Schema
       parameters:
@@ -5941,6 +6198,7 @@ paths:
         - secrets
 
       operationId: createRestSecret
+      x-speakeasy-entity-operation: RestSecret#create
       summary: Create RestSecret
       description: Create RestSecret
       requestBody:
@@ -5974,6 +6232,7 @@ paths:
         - secrets
 
       operationId: getRestSecret
+      x-speakeasy-entity-operation: RestSecret#get
       summary: Get RestSecret by ID
       description: Get RestSecret by ID
       parameters:
@@ -6007,6 +6266,7 @@ paths:
         - secrets
 
       operationId: updateRestSecret
+      x-speakeasy-entity-operation: RestSecret#update
       summary: Update RestSecret
       description: Update RestSecret
       parameters:
@@ -6046,6 +6306,7 @@ paths:
         - secrets
 
       operationId: deleteRestSecret
+      x-speakeasy-entity-operation: RestSecret#delete
       summary: Delete RestSecret
       description: Delete RestSecret
       parameters:
@@ -7202,6 +7463,7 @@ paths:
     get:
 
       operationId: getHealthInfo
+      x-speakeasy-entity-operation: Health#get
       summary: Provides health info for REST server
       security: []
       tags:
@@ -7809,6 +8071,7 @@ paths:
         - licenses
 
       operationId: createLicense
+      x-speakeasy-entity-operation: License#create
       summary: Create License
       description: Create License
       requestBody:
@@ -7842,6 +8105,7 @@ paths:
         - licenses
 
       operationId: getLicense
+      x-speakeasy-entity-operation: License#get
       summary: Get License by ID
       description: Get License by ID
       parameters:
@@ -7875,6 +8139,7 @@ paths:
         - licenses
 
       operationId: deleteLicense
+      x-speakeasy-entity-operation: License#delete
       summary: Delete License
       description: Delete License
       parameters:
@@ -7964,6 +8229,7 @@ paths:
         - logger
 
       operationId: getLoggerConfig
+      x-speakeasy-entity-operation: LoggerConfig#get
       summary: Get LoggerConfig by ID
       description: Get LoggerConfig by ID
       parameters:
@@ -7997,6 +8263,7 @@ paths:
         - logger
 
       operationId: updateLoggerConfig
+      x-speakeasy-entity-operation: LoggerConfig#update
       summary: Update LoggerConfig
       description: Update LoggerConfig
       parameters:
@@ -8036,6 +8303,7 @@ paths:
         - logger
 
       operationId: deleteLoggerConfig
+      x-speakeasy-entity-operation: LoggerConfig#delete
       summary: Delete LoggerConfig
       description: Delete LoggerConfig
       parameters:
@@ -10587,6 +10855,7 @@ components:
         items:
           $ref: "#/components/schemas/ExprLibEntry"
     RegexLibEntries:
+      x-speakeasy-entity-operation: Regexes
       type: object
       properties:
         count:
@@ -10902,6 +11171,7 @@ components:
           items:
             $ref: "#/components/schemas/ProfilerItem"
     ParserLibEntries:
+      x-speakeasy-entity-operation: Parser
       type: object
       properties:
         count:
@@ -11394,6 +11664,7 @@ components:
           items:
             $ref: "#/components/schemas/KeyMetadataEntity"
     GroupBundle:
+      x-speakeasy-entity-operation: GroupBundle
       type: object
       properties:
         count:
@@ -11537,6 +11808,7 @@ components:
       required:
         - origin
     DatasetProviderType:
+      x-speakeasy-entity-operation: DatasetProviderType
       type: object
       properties:
         description:
@@ -11559,6 +11831,7 @@ components:
         - disabled
         - id
     MappingRuleset:
+      x-speakeasy-entity-operation: Mapping
       type: object
       additionalProperties: false
       required:
@@ -11602,6 +11875,7 @@ components:
         - message
         - short
     ConfigGroup:
+      x-speakeasy-entity-operation: ConfigGroup
       type: object
       properties:
         configVersion:
@@ -11654,6 +11928,7 @@ components:
       required:
         - version
     KeyMetadataEntity:
+      x-speakeasy-entity-operation: Keys
       type: object
       required:
         - keyId
@@ -11706,6 +11981,7 @@ components:
             aes-256-gcm algorithm.
           default: false
     BulletinMessage:
+      x-speakeasy-entity-operation: BulletinMessage
       type: object
       additionalProperties: false
       required:
@@ -12036,6 +12312,7 @@ components:
             - info
             - critical
     NotificationTarget:
+      x-speakeasy-entity-operation: NotificationTarget
       type: object
       required:
         - id
@@ -12092,6 +12369,7 @@ components:
         - id
         - template
     Role:
+      x-speakeasy-entity-operation: Role
       type: object
       properties:
         id:
@@ -12745,6 +13023,7 @@ components:
           description: Identifies which search query to run
       type: object
     SavedJob:
+      x-speakeasy-entity-operation: SavedJob
       oneOf:
         - $ref: "#/components/schemas/SavedJobCollection"
         - $ref: "#/components/schemas/SavedJobExecutor"
@@ -12766,6 +13045,7 @@ components:
         - keepLastN
         - tz
     SavedQuery:
+      x-speakeasy-entity-operation: SavedQuery
       type: object
       properties:
         description:
@@ -12931,6 +13211,7 @@ components:
         - totalCPUSeconds
         - totalExecCPUSeconds
     EventBreakerRuleset:
+      x-speakeasy-entity-operation: EventBreaker
       type: object
       additionalProperties: false
       required:
@@ -13305,6 +13586,7 @@ components:
         - datatypePreview
         - scheduled
     SearchJob:
+      x-speakeasy-entity-operation: SearchJob
       type: object
       properties:
         chartConfig:
@@ -13313,8 +13595,7 @@ components:
           type: object
           properties:
             datatypes:
-              type: boolean
-          
+              type: boolean  
         correlationId:
           type: string
         cpuMetrics:
@@ -13890,6 +14171,7 @@ components:
         - cribl-custom
         - custom
     AppscopeLibEntry:
+      x-speakeasy-entity-operation: AppscopeLibEntry
       type: object
       properties:
         config:
@@ -13908,6 +14190,7 @@ components:
         - id
         - lib
     GrokFile:
+      x-speakeasy-entity-operation: GrokFile
       type: object
       properties:
         content:
@@ -13923,6 +14206,7 @@ components:
         - id
         - size
     LookupFile:
+      x-speakeasy-entity-operation: Lookup
       type: object
       required:
         - id
@@ -14037,6 +14321,7 @@ components:
           title: Tags
           description: One or more tags related to this regex. Optional.
     DataSample:
+      x-speakeasy-entity-operation: DataSample
       type: object
       additionalProperties: true
       required:
@@ -14077,6 +14362,7 @@ components:
       type: object
       properties: {}
     DatabaseConnectionConfig:
+      x-speakeasy-entity-operation: DatabaseConnectionConfig
       type: object
       properties:
         authType:
@@ -14129,6 +14415,7 @@ components:
         - authType
         - databaseType
     GlobalVar:
+      x-speakeasy-entity-operation: GlobalVariable
       type: object
       required:
         - id
@@ -30088,6 +30375,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     Input:
+      x-speakeasy-entity-operation: Input
       oneOf:
         - $ref: "#/components/schemas/InputCollection"
         - $ref: "#/components/schemas/InputKafka"
@@ -44004,6 +44292,7 @@ components:
           maximum: 86400
       type: object
     Output:
+      x-speakeasy-entity-operation: Output
       oneOf:
         - $ref: "#/components/schemas/OutputDefault"
         - $ref: "#/components/schemas/OutputWebhook"
@@ -44099,6 +44388,7 @@ components:
       required:
         - events
     SchemaLibEntry:
+      x-speakeasy-entity-operation: Schema
       type: object
       additionalProperties: true
       required:
@@ -44217,6 +44507,7 @@ components:
                     title: Disabled
                     description: Whether this group is disabled
     ProfilerItem:
+      x-speakeasy-entity-operation: Profiler
       type: object
       properties:
         createTime:
@@ -44327,6 +44618,7 @@ components:
         - keypair
         - credentials
     RestSecret:
+      x-speakeasy-entity-operation: Secret
       type: object
       properties:
         apiKey:
@@ -45129,6 +45421,7 @@ components:
                 (where applicable).
               default: false
         input:
+          x-speakeasy-entity-operation: Input
           type: object
           properties:
             type:
@@ -45923,6 +46216,7 @@ components:
         - id
         - level
     LoggerConfig:
+      x-speakeasy-entity-operation: LoggerConfig
       type: object
       properties:
         channels:
