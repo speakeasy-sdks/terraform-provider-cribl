@@ -68,12 +68,12 @@ func (s *globalVariables) DeleteGlobalVariableID(ctx context.Context, request op
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.GlobalVars
+			var out *shared.GlobalVar
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.GlobalVars = out
+			res.GlobalVar = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -136,12 +136,12 @@ func (s *globalVariables) GetGlobalVariableID(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.GlobalVars
+			var out *shared.GlobalVar
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.GlobalVars = out
+			res.GlobalVar = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -277,12 +277,12 @@ func (s *globalVariables) PostGlobalVariable(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.GlobalVars
+			var out *shared.GlobalVar
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.GlobalVars = out
+			res.GlobalVar = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -356,12 +356,12 @@ func (s *globalVariables) UpdateGlobalVariableID(ctx context.Context, request op
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.GlobalVars
+			var out *shared.GlobalVar
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.GlobalVars = out
+			res.GlobalVar = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

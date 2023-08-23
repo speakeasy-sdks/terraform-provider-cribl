@@ -15,7 +15,7 @@ type DeleteDataSampleIDRequest struct {
 type DeleteDataSampleIDResponse struct {
 	ContentType string
 	// a list of DataSample objects
-	DataSamples *shared.DataSamples
+	DataSample *shared.DataSample
 	// Unauthorized
 	Error       *shared.Error
 	StatusCode  int

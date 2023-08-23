@@ -77,12 +77,12 @@ func (s *keys) CreateKeyMetadataEntity(ctx context.Context, request shared.KeyMe
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.KeyMetadataEntities
+			var out *shared.KeyMetadataEntity
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.KeyMetadataEntities = out
+			res.KeyMetadataEntity = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -145,12 +145,12 @@ func (s *keys) DeleteKeyMetadataEntity(ctx context.Context, request operations.D
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.KeyMetadataEntities
+			var out *shared.KeyMetadataEntity
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.KeyMetadataEntities = out
+			res.KeyMetadataEntity = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -213,12 +213,12 @@ func (s *keys) GetKeyMetadataEntity(ctx context.Context, request operations.GetK
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.KeyMetadataEntities
+			var out *shared.KeyMetadataEntity
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.KeyMetadataEntities = out
+			res.KeyMetadataEntity = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -357,12 +357,12 @@ func (s *keys) UpdateKeyMetadataEntity(ctx context.Context, request operations.U
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.KeyMetadataEntities
+			var out *shared.KeyMetadataEntity
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.KeyMetadataEntities = out
+			res.KeyMetadataEntity = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

@@ -17,7 +17,7 @@ type DeleteRoleResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of Role objects
-	Roles       *shared.Roles
+	Role        *shared.Role
 	StatusCode  int
 	RawResponse *http.Response
 }

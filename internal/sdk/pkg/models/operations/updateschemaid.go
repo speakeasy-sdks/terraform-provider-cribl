@@ -19,7 +19,7 @@ type UpdateSchemaIDResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of Schema objects
-	SchemaLibEntries *shared.SchemaLibEntries
-	StatusCode       int
-	RawResponse      *http.Response
+	SchemaLibEntry *shared.SchemaLibEntry
+	StatusCode     int
+	RawResponse    *http.Response
 }

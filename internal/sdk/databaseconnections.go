@@ -144,12 +144,12 @@ func (s *databaseConnections) DeleteDatabaseConnectionConfigID(ctx context.Conte
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DatabaseConnectionConfigs
+			var out *shared.DatabaseConnectionConfig
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DatabaseConnectionConfigs = out
+			res.DatabaseConnectionConfig = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -212,12 +212,12 @@ func (s *databaseConnections) GetDatabaseConnectionConfigID(ctx context.Context,
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DatabaseConnectionConfigs
+			var out *shared.DatabaseConnectionConfig
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DatabaseConnectionConfigs = out
+			res.DatabaseConnectionConfig = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -357,12 +357,12 @@ func (s *databaseConnections) PostDatabaseConnection(ctx context.Context, reques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DatabaseConnectionConfigs
+			var out *shared.DatabaseConnectionConfig
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DatabaseConnectionConfigs = out
+			res.DatabaseConnectionConfig = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -436,12 +436,12 @@ func (s *databaseConnections) UpdateDatabaseConnectionConfigID(ctx context.Conte
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DatabaseConnectionConfigs
+			var out *shared.DatabaseConnectionConfig
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DatabaseConnectionConfigs = out
+			res.DatabaseConnectionConfig = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

@@ -12,7 +12,7 @@ type CreateKeyMetadataEntityResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of KeyMetadataEntity objects
-	KeyMetadataEntities *shared.KeyMetadataEntities
-	StatusCode          int
-	RawResponse         *http.Response
+	KeyMetadataEntity *shared.KeyMetadataEntity
+	StatusCode        int
+	RawResponse       *http.Response
 }

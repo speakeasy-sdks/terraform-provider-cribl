@@ -76,12 +76,12 @@ func (s *notificationTargets) CreateNotificationTarget(ctx context.Context, requ
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.NotificationTargets
+			var out *shared.NotificationTarget
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.NotificationTargets = out
+			res.NotificationTarget = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -144,12 +144,12 @@ func (s *notificationTargets) DeletetNotificationTarget(ctx context.Context, req
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.NotificationTargets
+			var out *shared.NotificationTarget
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.NotificationTargets = out
+			res.NotificationTarget = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -212,12 +212,12 @@ func (s *notificationTargets) GetNotificationTarget(ctx context.Context, request
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.NotificationTargets
+			var out *shared.NotificationTarget
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.NotificationTargets = out
+			res.NotificationTarget = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -356,12 +356,12 @@ func (s *notificationTargets) UpdatetNotificationTarget(ctx context.Context, req
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.NotificationTargets
+			var out *shared.NotificationTarget
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.NotificationTargets = out
+			res.NotificationTarget = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

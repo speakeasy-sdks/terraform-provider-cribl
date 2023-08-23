@@ -19,7 +19,7 @@ type UpdateOutputIDResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of Output objects
-	Outputs     *shared.Outputs
+	Output      *shared.Output
 	StatusCode  int
 	RawResponse *http.Response
 }

@@ -1,8 +1,8 @@
 configVersion: 1.0.0
 management:
-  docChecksum: 16479dc5f2d12846b94424b2bbead71c
+  docChecksum: fcc8c7055ad4377863e2869acbe9c289
   docVersion: 1.0.0
-  speakeasyVersion: 1.74.3
+  speakeasyVersion: 1.74.7
   generationVersion: 2.86.6
 generation:
   comments:
@@ -19,10 +19,11 @@ features:
     getRequestBodies: 2.81.1
     globalSecurity: 2.81.1
     globalServerURLs: 2.82.0
+    groups: 2.81.1
     includes: 2.81.1
     inputOutputModels: 2.81.1
     nameOverrides: 2.81.1
 terraform:
-  version: 1.4.1
+  version: 1.4.2
   author: cribl-dev
   packageName: Cribl

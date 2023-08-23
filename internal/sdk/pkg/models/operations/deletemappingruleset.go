@@ -17,7 +17,7 @@ type DeleteMappingRulesetResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of MappingRuleset objects
-	MappingRulesets *shared.MappingRulesets
-	StatusCode      int
-	RawResponse     *http.Response
+	MappingRuleset *shared.MappingRuleset
+	StatusCode     int
+	RawResponse    *http.Response
 }

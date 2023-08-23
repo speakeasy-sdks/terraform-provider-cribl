@@ -68,12 +68,12 @@ func (s *parquetschemas) DeleteSchemaID(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SchemaLibEntries
+			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SchemaLibEntries = out
+			res.SchemaLibEntry = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -136,12 +136,12 @@ func (s *parquetschemas) GetSchemaID(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SchemaLibEntries
+			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SchemaLibEntries = out
+			res.SchemaLibEntry = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -277,12 +277,12 @@ func (s *parquetschemas) PostSchema(ctx context.Context, request shared.SchemaLi
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SchemaLibEntries
+			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SchemaLibEntries = out
+			res.SchemaLibEntry = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -356,12 +356,12 @@ func (s *parquetschemas) UpdateSchemaID(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SchemaLibEntries
+			var out *shared.SchemaLibEntry
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SchemaLibEntries = out
+			res.SchemaLibEntry = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

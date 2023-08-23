@@ -17,7 +17,7 @@ type GetSavedJobResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of SavedJob objects
-	SavedJobs   *shared.SavedJobs
+	SavedJob    *shared.SavedJob
 	StatusCode  int
 	RawResponse *http.Response
 }

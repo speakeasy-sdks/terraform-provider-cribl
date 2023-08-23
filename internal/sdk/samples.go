@@ -145,12 +145,12 @@ func (s *samples) DeleteDataSampleID(ctx context.Context, request operations.Del
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DataSamples
+			var out *shared.DataSample
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DataSamples = out
+			res.DataSample = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -213,12 +213,12 @@ func (s *samples) GetDataSampleID(ctx context.Context, request operations.GetDat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DataSamples
+			var out *shared.DataSample
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DataSamples = out
+			res.DataSample = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -422,12 +422,12 @@ func (s *samples) PostDataSample(ctx context.Context, request shared.DataSample)
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DataSamples
+			var out *shared.DataSample
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DataSamples = out
+			res.DataSample = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -577,12 +577,12 @@ func (s *samples) UpdateDataSampleID(ctx context.Context, request operations.Upd
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DataSamples
+			var out *shared.DataSample
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.DataSamples = out
+			res.DataSample = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

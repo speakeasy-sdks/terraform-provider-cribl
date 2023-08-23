@@ -61,6 +61,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // CriblTerraform - Cribl API Reference: This API Reference lists available REST endpoints, along with their supported operations for accessing, creating, updating, or deleting resources. See our complementary product documentation at [docs.cribl.io](http://docs.cribl.io).
 type CriblTerraform struct {
+	InputObject     *inputObject
 	AppscopeConfigs *appscopeConfigs
 	// Auth - Actions related to authentication. Do not use the /auth endpoints in Cribl.Cloud deployments. Instead, obtain a Bearer token as described here: https://docs.cribl.io/stream/api-tutorials/#criblcloud-free-tier
 	Auth      *auth
@@ -102,6 +103,8 @@ type CriblTerraform struct {
 	Groups          *groups
 	// Health - Actions related to REST server health
 	Health *health
+	// Inputs - Actions related to inputs
+	Inputs *inputs
 	Jobs   *jobs
 	// Keys - Actions related to encryption keys
 	Keys *keys
@@ -224,7 +227,7 @@ func New(opts ...SDKOption) *CriblTerraform {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "terraform",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "1.4.1",
+			SDKVersion:        "1.4.2",
 			GenVersion:        "2.86.6",
 			ServerDefaults: []map[string]string{
 				{
@@ -248,6 +251,8 @@ func New(opts ...SDKOption) *CriblTerraform {
 			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
 		}
 	}
+
+	sdk.InputObject = newInputObject(sdk.sdkConfiguration)
 
 	sdk.AppscopeConfigs = newAppscopeConfigs(sdk.sdkConfiguration)
 
@@ -310,6 +315,8 @@ func New(opts ...SDKOption) *CriblTerraform {
 	sdk.Groups = newGroups(sdk.sdkConfiguration)
 
 	sdk.Health = newHealth(sdk.sdkConfiguration)
+
+	sdk.Inputs = newInputs(sdk.sdkConfiguration)
 
 	sdk.Jobs = newJobs(sdk.sdkConfiguration)
 

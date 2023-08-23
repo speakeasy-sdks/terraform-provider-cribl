@@ -17,7 +17,7 @@ type UpdateDatabaseConnectionConfigIDRequest struct {
 type UpdateDatabaseConnectionConfigIDResponse struct {
 	ContentType string
 	// a list of DatabaseConnectionConfig objects
-	DatabaseConnectionConfigs *shared.DatabaseConnectionConfigs
+	DatabaseConnectionConfig *shared.DatabaseConnectionConfig
 	// Unauthorized
 	Error       *shared.Error
 	StatusCode  int

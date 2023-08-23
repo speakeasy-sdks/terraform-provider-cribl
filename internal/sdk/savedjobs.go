@@ -76,12 +76,12 @@ func (s *savedJobs) CreateSavedJobs(ctx context.Context, request shared.SavedJob
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SavedJobs
+			var out *shared.SavedJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SavedJobs = out
+			res.SavedJob = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -144,12 +144,12 @@ func (s *savedJobs) DeleteSavedJob(ctx context.Context, request operations.Delet
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SavedJobs
+			var out *shared.SavedJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SavedJobs = out
+			res.SavedJob = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -212,12 +212,12 @@ func (s *savedJobs) GetSavedJob(ctx context.Context, request operations.GetSaved
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SavedJobs
+			var out *shared.SavedJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SavedJobs = out
+			res.SavedJob = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -356,12 +356,12 @@ func (s *savedJobs) UpdateSavedJob(ctx context.Context, request operations.Updat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.SavedJobs
+			var out *shared.SavedJob
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.SavedJobs = out
+			res.SavedJob = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

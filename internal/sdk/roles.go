@@ -76,12 +76,12 @@ func (s *roles) CreateRole(ctx context.Context, request shared.Role) (*operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Roles
+			var out *shared.Role
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Roles = out
+			res.Role = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -144,12 +144,12 @@ func (s *roles) DeleteRole(ctx context.Context, request operations.DeleteRoleReq
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Roles
+			var out *shared.Role
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Roles = out
+			res.Role = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -212,12 +212,12 @@ func (s *roles) GetRole(ctx context.Context, request operations.GetRoleRequest) 
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Roles
+			var out *shared.Role
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Roles = out
+			res.Role = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -356,12 +356,12 @@ func (s *roles) UpdateRole(ctx context.Context, request operations.UpdateRoleReq
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Roles
+			var out *shared.Role
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Roles = out
+			res.Role = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

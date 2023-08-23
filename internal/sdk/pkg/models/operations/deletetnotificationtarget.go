@@ -17,7 +17,7 @@ type DeletetNotificationTargetResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of NotificationTarget objects
-	NotificationTargets *shared.NotificationTargets
-	StatusCode          int
-	RawResponse         *http.Response
+	NotificationTarget *shared.NotificationTarget
+	StatusCode         int
+	RawResponse        *http.Response
 }

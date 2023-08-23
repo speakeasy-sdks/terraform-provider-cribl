@@ -69,12 +69,12 @@ func (s *eventBreakerRules) DeleteEventBreaker(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.EventBreakerRulesets
+			var out *shared.EventBreakerRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.EventBreakerRulesets = out
+			res.EventBreakerRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -137,12 +137,12 @@ func (s *eventBreakerRules) GetEventBreakerID(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.EventBreakerRulesets
+			var out *shared.EventBreakerRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.EventBreakerRulesets = out
+			res.EventBreakerRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -278,12 +278,12 @@ func (s *eventBreakerRules) PostEventBreaker(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.EventBreakerRulesets
+			var out *shared.EventBreakerRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.EventBreakerRulesets = out
+			res.EventBreakerRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -357,12 +357,12 @@ func (s *eventBreakerRules) UpdateEventBreaker(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.EventBreakerRulesets
+			var out *shared.EventBreakerRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.EventBreakerRulesets = out
+			res.EventBreakerRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

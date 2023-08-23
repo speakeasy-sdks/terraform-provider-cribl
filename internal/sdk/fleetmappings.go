@@ -76,12 +76,12 @@ func (s *fleetMappings) CreateFleetMapping(ctx context.Context, request shared.M
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.MappingRulesets
+			var out *shared.MappingRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.MappingRulesets = out
+			res.MappingRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -144,12 +144,12 @@ func (s *fleetMappings) DeleteMappingRuleset(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.MappingRulesets
+			var out *shared.MappingRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.MappingRulesets = out
+			res.MappingRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -212,12 +212,12 @@ func (s *fleetMappings) GetMappingRuleset(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.MappingRulesets
+			var out *shared.MappingRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.MappingRulesets = out
+			res.MappingRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -356,12 +356,12 @@ func (s *fleetMappings) UpdateMappingRulesets(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.MappingRulesets
+			var out *shared.MappingRuleset
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.MappingRulesets = out
+			res.MappingRuleset = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

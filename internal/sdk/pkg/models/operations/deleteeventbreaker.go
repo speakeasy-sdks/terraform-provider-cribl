@@ -17,7 +17,7 @@ type DeleteEventBreakerResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of Event Breaker Ruleset objects
-	EventBreakerRulesets *shared.EventBreakerRulesets
-	StatusCode           int
-	RawResponse          *http.Response
+	EventBreakerRuleset *shared.EventBreakerRuleset
+	StatusCode          int
+	RawResponse         *http.Response
 }

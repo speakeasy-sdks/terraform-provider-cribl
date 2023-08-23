@@ -77,12 +77,12 @@ func (s *outputs) CreateOutputObject(ctx context.Context, request shared.Output)
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Outputs
+			var out *shared.Output
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Outputs = out
+			res.Output = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -145,12 +145,12 @@ func (s *outputs) DeleteOutputID(ctx context.Context, request operations.DeleteO
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Outputs
+			var out *shared.Output
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Outputs = out
+			res.Output = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -280,12 +280,12 @@ func (s *outputs) GetOutputID(ctx context.Context, request operations.GetOutputI
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Outputs
+			var out *shared.Output
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Outputs = out
+			res.Output = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough
@@ -770,12 +770,12 @@ func (s *outputs) UpdateOutputID(ctx context.Context, request operations.UpdateO
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Outputs
+			var out *shared.Output
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.Outputs = out
+			res.Output = out
 		}
 	case httpRes.StatusCode == 401:
 		fallthrough

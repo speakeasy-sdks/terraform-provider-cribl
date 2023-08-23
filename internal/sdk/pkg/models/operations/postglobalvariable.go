@@ -12,7 +12,7 @@ type PostGlobalVariableResponse struct {
 	// Unauthorized
 	Error *shared.Error
 	// a list of Global Variable objects
-	GlobalVars  *shared.GlobalVars
+	GlobalVar   *shared.GlobalVar
 	StatusCode  int
 	RawResponse *http.Response
 }
