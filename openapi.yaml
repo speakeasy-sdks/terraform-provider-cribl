@@ -10855,7 +10855,7 @@ components:
         items:
           $ref: "#/components/schemas/ExprLibEntry"
     RegexLibEntries:
-      x-speakeasy-entity-operation: Regexes
+      x-speakeasy-entity: Regexes
       type: object
       properties:
         count:
@@ -11171,7 +11171,7 @@ components:
           items:
             $ref: "#/components/schemas/ProfilerItem"
     ParserLibEntries:
-      x-speakeasy-entity-operation: Parser
+      x-speakeasy-entity: Parser
       type: object
       properties:
         count:
@@ -11664,7 +11664,7 @@ components:
           items:
             $ref: "#/components/schemas/KeyMetadataEntity"
     GroupBundle:
-      x-speakeasy-entity-operation: GroupBundle
+      x-speakeasy-entity: GroupBundle
       type: object
       properties:
         count:
@@ -11808,7 +11808,7 @@ components:
       required:
         - origin
     DatasetProviderType:
-      x-speakeasy-entity-operation: DatasetProviderType
+      x-speakeasy-entity: DatasetProviderType
       type: object
       properties:
         description:
@@ -11831,7 +11831,7 @@ components:
         - disabled
         - id
     MappingRuleset:
-      x-speakeasy-entity-operation: Mapping
+      x-speakeasy-entity: Mapping
       type: object
       additionalProperties: false
       required:
@@ -11875,7 +11875,7 @@ components:
         - message
         - short
     ConfigGroup:
-      x-speakeasy-entity-operation: ConfigGroup
+      x-speakeasy-entity: ConfigGroup
       type: object
       properties:
         configVersion:
@@ -11928,7 +11928,7 @@ components:
       required:
         - version
     KeyMetadataEntity:
-      x-speakeasy-entity-operation: Keys
+      x-speakeasy-entity: Keys
       type: object
       required:
         - keyId
@@ -11981,7 +11981,7 @@ components:
             aes-256-gcm algorithm.
           default: false
     BulletinMessage:
-      x-speakeasy-entity-operation: BulletinMessage
+      x-speakeasy-entity: BulletinMessage
       type: object
       additionalProperties: false
       required:
@@ -12312,7 +12312,7 @@ components:
             - info
             - critical
     NotificationTarget:
-      x-speakeasy-entity-operation: NotificationTarget
+      x-speakeasy-entity: NotificationTarget
       type: object
       required:
         - id
@@ -12369,7 +12369,7 @@ components:
         - id
         - template
     Role:
-      x-speakeasy-entity-operation: Role
+      x-speakeasy-entity: Role
       type: object
       properties:
         id:
@@ -13023,7 +13023,7 @@ components:
           description: Identifies which search query to run
       type: object
     SavedJob:
-      x-speakeasy-entity-operation: SavedJob
+      x-speakeasy-entity: SavedJob
       oneOf:
         - $ref: "#/components/schemas/SavedJobCollection"
         - $ref: "#/components/schemas/SavedJobExecutor"
@@ -13045,7 +13045,7 @@ components:
         - keepLastN
         - tz
     SavedQuery:
-      x-speakeasy-entity-operation: SavedQuery
+      x-speakeasy-entity: SavedQuery
       type: object
       properties:
         description:
@@ -13211,7 +13211,7 @@ components:
         - totalCPUSeconds
         - totalExecCPUSeconds
     EventBreakerRuleset:
-      x-speakeasy-entity-operation: EventBreaker
+      x-speakeasy-entity: EventBreaker
       type: object
       additionalProperties: false
       required:
@@ -13586,7 +13586,7 @@ components:
         - datatypePreview
         - scheduled
     SearchJob:
-      x-speakeasy-entity-operation: SearchJob
+      x-speakeasy-entity: SearchJob
       type: object
       properties:
         chartConfig:
@@ -13745,7 +13745,7 @@ components:
         - totalEventCount
     User:
       type: object
-      x-speakeasy-entity-operation: User
+      x-speakeasy-entity: User
       properties:
         currentPassword:
           type: string
@@ -14171,7 +14171,7 @@ components:
         - cribl-custom
         - custom
     AppscopeLibEntry:
-      x-speakeasy-entity-operation: AppscopeLibEntry
+      x-speakeasy-entity: AppscopeLibEntry
       type: object
       properties:
         config:
@@ -14190,7 +14190,7 @@ components:
         - id
         - lib
     GrokFile:
-      x-speakeasy-entity-operation: GrokFile
+      x-speakeasy-entity: GrokFile
       type: object
       properties:
         content:
@@ -14206,7 +14206,7 @@ components:
         - id
         - size
     LookupFile:
-      x-speakeasy-entity-operation: Lookup
+      x-speakeasy-entity: Lookup
       type: object
       required:
         - id
@@ -14321,7 +14321,7 @@ components:
           title: Tags
           description: One or more tags related to this regex. Optional.
     DataSample:
-      x-speakeasy-entity-operation: DataSample
+      x-speakeasy-entity: DataSample
       type: object
       additionalProperties: true
       required:
@@ -14362,7 +14362,7 @@ components:
       type: object
       properties: {}
     DatabaseConnectionConfig:
-      x-speakeasy-entity-operation: DatabaseConnectionConfig
+      x-speakeasy-entity: DatabaseConnectionConfig
       type: object
       properties:
         authType:
@@ -14415,7 +14415,7 @@ components:
         - authType
         - databaseType
     GlobalVar:
-      x-speakeasy-entity-operation: GlobalVariable
+      x-speakeasy-entity: GlobalVariable
       type: object
       required:
         - id
@@ -14456,6 +14456,7 @@ components:
           title: Tags
           description: One or more tags related to this variable. Optional.
     InputCollection:
+      x-speakeasy-entity: InputCollection
       required:
         - id
         - type
@@ -14650,6 +14651,7 @@ components:
           description: Destination to send results to.
       type: object
     InputKafka:
+      x-speakeasy-entity: InputKafka
       required:
         - brokers
         - topics
@@ -15107,6 +15109,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputMsk:
+      x-speakeasy-entity: InputMsk
       required:
         - brokers
         - topics
@@ -15635,6 +15638,7 @@ components:
           example: awsAuthenticationMethod
       type: object
     InputHttp:
+      x-speakeasy-entity: InputHttp
       required:
         - host
         - port
@@ -15931,6 +15935,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputSplunk:
+      x-speakeasy-entity: InputSplunk
       required:
         - host
         - port
@@ -16211,6 +16216,7 @@ components:
             Toggle to 'No' to disable this fallback.
       type: object
     InputSplunkSearch:
+      x-speakeasy-entity: InputSplunkSearch
       required:
         - searchHead
         - search
@@ -16670,6 +16676,7 @@ components:
                 description: OAuth header value
       type: object
     InputSplunkHec:
+      x-speakeasy-entity: InputSplunkHec
       required:
         - host
         - port
@@ -17046,6 +17053,7 @@ components:
             minLength: 1
       type: object
     InputAzureBlob:
+      x-speakeasy-entity: InputAzureBlob
       required:
         - queueName
         - type
@@ -17294,6 +17302,7 @@ components:
             target: connectionString
       type: object
     InputElastic:
+      x-speakeasy-entity: InputElastic
       required:
         - host
         - port
@@ -17690,6 +17699,7 @@ components:
             }
       type: object
     InputConfluentCloud:
+      x-speakeasy-entity: InputConfluentCloud
       required:
         - brokers
         - topics
@@ -18145,6 +18155,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputGrafana:
+      x-speakeasy-entity: InputGrafana
       required:
         - host
         - port
@@ -18670,6 +18681,7 @@ components:
         - required:
             - lokiAPI
     InputLoki:
+      x-speakeasy-entity: InputLoki
       required:
         - host
         - port
@@ -19056,6 +19068,7 @@ components:
                 description: OAuth header value
       type: object
     InputPrometheusRw:
+      x-speakeasy-entity: InputPrometheusRw
       required:
         - host
         - port
@@ -19442,6 +19455,7 @@ components:
                 description: OAuth header value
       type: object
     InputPrometheus:
+      x-speakeasy-entity: InputPrometheus
       required:
         - interval
         - logLevel
@@ -19888,6 +19902,7 @@ components:
             - discoveryType
       type: object
     InputEdgePrometheus:
+      x-speakeasy-entity: InputEdgePrometheus
       required:
         - interval
         - discoveryType
@@ -20375,6 +20390,7 @@ components:
             - searchFilter
       type: object
     InputOffice365Mgmt:
+      x-speakeasy-entity: InputOffice365Mgmt
       required:
         - tenantId
         - appId
@@ -20654,6 +20670,7 @@ components:
             target: clientSecret
       type: object
     InputOffice365Service:
+      x-speakeasy-entity: InputOffice365Service
       required:
         - tenantId
         - appId
@@ -20900,6 +20917,7 @@ components:
             target: clientSecret
       type: object
     InputOffice365MsgTrace:
+      x-speakeasy-entity: InputOffice365MsgTrace
       required:
         - url
         - interval
@@ -21234,6 +21252,7 @@ components:
                 format. Can reference $ENV_VARS.
       type: object
     InputEventhub:
+      x-speakeasy-entity: InputEventhub
       required:
         - brokers
         - topics
@@ -21566,6 +21585,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputExec:
+      x-speakeasy-entity: InputExec
       required:
         - command
         - type
@@ -21808,6 +21828,7 @@ components:
             - scheduleType
       type: object
     InputFirehose:
+      x-speakeasy-entity: InputFirehose
       required:
         - host
         - port
@@ -22075,6 +22096,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputGooglePubsub:
+      x-speakeasy-entity: InputGooglePubsub
       required:
         - topicName
         - subscriptionName
@@ -22314,6 +22336,7 @@ components:
           default: false
       type: object
     InputCribl:
+      x-speakeasy-entity: InputCribl
       required:
         - id
         - type
@@ -22457,6 +22480,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputCriblTcp:
+      x-speakeasy-entity: InputCriblTcp
       required:
         - host
         - port
@@ -22681,6 +22705,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputCriblHttp:
+      x-speakeasy-entity: InputCriblHttp
       required:
         - host
         - port
@@ -22948,6 +22973,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputTcpjson:
+      x-speakeasy-entity: InputTcpjson
       required:
         - host
         - port
@@ -23199,6 +23225,7 @@ components:
             target: authToken
       type: object
     InputSystemMetrics:
+      x-speakeasy-entity: InputSystemMetrics
       required:
         - id
         - type
@@ -23651,6 +23678,7 @@ components:
                 $CRIBL_HOME/state/system_metrics
       type: object
     InputSystemState:
+      x-speakeasy-entity: InputSystemState
       required:
         - id
         - type
@@ -23960,6 +23988,7 @@ components:
                 $CRIBL_HOME/state/system_state
       type: object
     InputKubeMetrics:
+      x-speakeasy-entity: InputKubeMetrics
       required:
         - id
         - type
@@ -24225,6 +24254,7 @@ components:
               description: Path to use to write metrics. Defaults to $CRIBL_HOME/state/<id>
       type: object
     InputKubeLogs:
+      x-speakeasy-entity: InputKubeLogs
       required:
         - id
         - type
@@ -24473,6 +24503,7 @@ components:
           maximum: 43200000
       type: object
     InputKubeEvents:
+      x-speakeasy-entity: InputKubeEvents
       required:
         - id
         - type
@@ -24685,6 +24716,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputWindowsMetrics:
+      x-speakeasy-entity: InputWindowsMetrics
       required:
         - id
         - type
@@ -25062,6 +25094,7 @@ components:
                 $CRIBL_HOME/state/windows_metrics
       type: object
     InputCrowdstrike:
+      x-speakeasy-entity: InputCrowdstrike
       required:
         - queueName
         - type
@@ -25413,6 +25446,7 @@ components:
             authTypeField: awsAuthenticationMethod
       type: object
     InputDatadogAgent:
+      x-speakeasy-entity: InputDatadogAgent
       required:
         - host
         - port
@@ -25696,6 +25730,7 @@ components:
                 valid.
       type: object
     InputDatagen:
+      x-speakeasy-entity: InputDatagen
       required:
         - samples
         - type
@@ -25911,6 +25946,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputHttpRaw:
+      x-speakeasy-entity: InputHttpRaw
       required:
         - host
         - port
@@ -26214,6 +26250,7 @@ components:
             minLength: 1
       type: object
     InputKinesis:
+      x-speakeasy-entity: InputKinesis
       required:
         - streamName
         - region
@@ -26525,6 +26562,7 @@ components:
             authTypeField: awsAuthenticationMethod
       type: object
     InputCriblmetrics:
+      x-speakeasy-entity: InputCriblmetrics
       required:
         - id
         - type
@@ -26684,6 +26722,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputMetrics:
+      x-speakeasy-entity: InputMetrics
       required:
         - host
         - type
@@ -26925,6 +26964,7 @@ components:
             - tcpPort
       type: object
     InputS3:
+      x-speakeasy-entity: InputS3
       required:
         - queueName
         - type
@@ -27292,6 +27332,7 @@ components:
             authTypeField: awsAuthenticationMethod
       type: object
     InputSnmp:
+      x-speakeasy-entity: InputSnmp
       required:
         - host
         - port
@@ -27459,6 +27500,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputOpenTelemetry:
+      x-speakeasy-entity: InputOpenTelemetry
       required:
         - host
         - port
@@ -27848,6 +27890,7 @@ components:
                 description: OAuth header value
       type: object
     InputSqs:
+      x-speakeasy-entity: InputSqs
       required:
         - queueName
         - queueType
@@ -28151,6 +28194,7 @@ components:
           maximum: 100
       type: object
     InputSyslog:
+      x-speakeasy-entity: InputSyslog
       required:
         - host
         - type
@@ -28430,6 +28474,7 @@ components:
             - host
             - tcpPort
     InputFile:
+      x-speakeasy-entity: InputFile
       required:
         - id
         - type
@@ -28707,6 +28752,7 @@ components:
             - depth
       type: object
     InputTcp:
+      x-speakeasy-entity: InputTcp
       required:
         - host
         - port
@@ -28997,6 +29043,7 @@ components:
             - enableHeader
       type: object
     InputAppscope:
+      x-speakeasy-entity: InputAppscope
       required:
         - id
         - type
@@ -29389,6 +29436,7 @@ components:
             - enableUnixPath
       type: object
     InputWef:
+      x-speakeasy-entity: InputWef
       required:
         - host
         - port
@@ -29763,6 +29811,7 @@ components:
             - keytab
       type: object
     InputWinEventLogs:
+      x-speakeasy-entity: InputWinEventLogs
       required:
         - logNames
         - type
@@ -29949,6 +29998,7 @@ components:
           maximum: 134217728
       type: object
     InputRawUdp:
+      x-speakeasy-entity: InputRawUdp
       required:
         - host
         - port
@@ -30128,6 +30178,7 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     InputJournalFiles:
+      x-speakeasy-entity: InputJournalFiles
       required:
         - path
         - journals
@@ -30375,7 +30426,6 @@ components:
                   or backticks. (Can evaluate to a constant.)
       type: object
     Input:
-      x-speakeasy-entity-operation: Input
       oneOf:
         - $ref: "#/components/schemas/InputCollection"
         - $ref: "#/components/schemas/InputKafka"
@@ -30510,7 +30560,9 @@ components:
           description: ID of the default output. This will be used whenever a
             nonexistent/deleted output is referenced.
       type: object
+      x-speakeasy-entity: OutputDefault
     OutputWebhook:
+      x-speakeasy-entity: OutputWebhook
       required:
         - url
         - type
@@ -30938,6 +30990,7 @@ components:
                 description: OAuth header value
       type: object
     OutputDevnull:
+      x-speakeasy-entity: OutputDevnull
       required:
         - id
         - type
@@ -30977,6 +31030,7 @@ components:
             type: string
       type: object
     OutputSyslog:
+      x-speakeasy-entity: OutputSyslog
       required:
         - id
         - type
@@ -31264,6 +31318,7 @@ components:
             - protocol
       type: object
     OutputSplunk:
+      x-speakeasy-entity: OutputSplunk
       required:
         - host
         - port
@@ -31512,6 +31567,7 @@ components:
             target: authToken
       type: object
     OutputSplunkLb:
+      x-speakeasy-entity: OutputSplunkLb
       required:
         - hosts
         - type
@@ -31892,6 +31948,7 @@ components:
             - indexerDiscoveryConfigs
       type: object
     OutputSplunkHec:
+      x-speakeasy-entity: OutputSplunkHec
       required:
         - id
         - type
@@ -32178,6 +32235,7 @@ components:
             - urls
       type: object
     OutputTcpjson:
+      x-speakeasy-entity: OutputTcpjson
       required:
         - id
         - type
@@ -32484,6 +32542,7 @@ components:
             - hosts
       type: object
     OutputWavefront:
+      x-speakeasy-entity: OutputWavefront
       required:
         - domain
         - type
@@ -32696,6 +32755,7 @@ components:
           title: ""
       type: object
     OutputSignalfx:
+      x-speakeasy-entity: OutputSignalfx
       required:
         - realm
         - type
@@ -32908,6 +32968,7 @@ components:
           title: ""
       type: object
     OutputFilesystem:
+      x-speakeasy-entity: OutputFileSystem
       required:
         - destPath
         - type
@@ -33102,6 +33163,7 @@ components:
           maximum: 86400
       type: object
     OutputS3:
+      x-speakeasy-entity: OutputS3
       required:
         - bucket
         - destPath
@@ -33447,6 +33509,7 @@ components:
           maximum: 86400
       type: object
     OutputAzureBlob:
+      x-speakeasy-entity: OutputAzureBlob
       required:
         - containerName
         - destPath
@@ -33681,6 +33744,7 @@ components:
             target: connectionString
       type: object
     OutputAzureLogs:
+      x-speakeasy-entity: OutputAzureLogs
       required:
         - logType
         - type
@@ -33926,6 +33990,7 @@ components:
             authTypeField: awsAuthenticationMethod
       type: object
     OutputKinesis:
+      x-speakeasy-entity: OutputKinesis
       required:
         - streamName
         - region
@@ -34144,6 +34209,7 @@ components:
           title: ""
       type: object
     OutputHoneycomb:
+      x-speakeasy-entity: OutputHoneycomb
       required:
         - dataset
         - type
@@ -34354,6 +34420,7 @@ components:
             target: team
       type: object
     OutputAzureEventhub:
+      x-speakeasy-entity: OutputAzureEventhub
       required:
         - brokers
         - topic
@@ -34584,6 +34651,7 @@ components:
           title: ""
       type: object
     OutputGoogleChronicle:
+      x-speakeasy-entity: OutputGoogleChronicle
       required:
         - logType
         - type
@@ -35725,6 +35793,7 @@ components:
           title: ""
       type: object
     OutputGoogleCloudStorage:
+      x-speakeasy-entity: OutputGoogleCloudStorage
       required:
         - bucket
         - endpoint
@@ -36054,6 +36123,7 @@ components:
             authTypeField: awsAuthenticationMethod
       type: object
     OutputGoogleCloudLogging:
+      x-speakeasy-entity: OutputGoogleCloudLogging
       required:
         - logLocationType
         - logLocationExpression
@@ -36313,6 +36383,7 @@ components:
           title: ""
       type: object
     OutputGooglePubsub:
+      x-speakeasy-entity: OutputGooglePubsub
       required:
         - topicName
         - type
@@ -36527,6 +36598,7 @@ components:
           title: ""
       type: object
     OutputKafka:
+      x-speakeasy-entity: OutputKafka
       required:
         - brokers
         - topic
@@ -36905,6 +36977,7 @@ components:
           title: ""
       type: object
     OutputConfluentCloud:
+      x-speakeasy-entity: OutputConfluentCloud
       required:
         - brokers
         - topic
@@ -37282,6 +37355,7 @@ components:
           title: ""
       type: object
     OutputMsk:
+      x-speakeasy-entity: OutputMsk
       required:
         - brokers
         - topic
@@ -37732,6 +37806,7 @@ components:
           title: ""
       type: object
     OutputElastic:
+      x-speakeasy-entity: OutputElastic
       required:
         - index
         - type
@@ -38046,6 +38121,7 @@ components:
             - urls
       type: object
     OutputNewrelic:
+      x-speakeasy-entity: OutputNewrelic
       required:
         - region
         - type
@@ -38298,6 +38374,7 @@ components:
             target: apiKey
       type: object
     OutputNewrelicEvents:
+      x-speakeasy-entity: OutputNewrelicEvents
       required:
         - accountId
         - region
@@ -38523,6 +38600,7 @@ components:
             target: apiKey
       type: object
     OutputInfluxdb:
+      x-speakeasy-entity: OutputInfluxdb
       required:
         - url
         - type
@@ -38882,6 +38960,7 @@ components:
             - useV2API
       type: object
     OutputCloudwatch:
+      x-speakeasy-entity: OutputCloudwatch
       required:
         - logGroupName
         - logStreamName
@@ -39107,6 +39186,7 @@ components:
           title: ""
       type: object
     OutputMinio:
+      x-speakeasy-entity: OutputMinio
       required:
         - bucket
         - destPath
@@ -39425,6 +39505,7 @@ components:
           maximum: 86400
       type: object
     OutputStatsd:
+      x-speakeasy-entity: OutputStatsd
       required:
         - protocol
         - host
@@ -39576,6 +39657,7 @@ components:
           title: ""
       type: object
     OutputStatsdExt:
+      x-speakeasy-entity: OutputStatsdExt
       required:
         - protocol
         - host
@@ -39727,6 +39809,7 @@ components:
           title: ""
       type: object
     OutputGraphite:
+      x-speakeasy-entity: OutputGraphite
       required:
         - protocol
         - host
@@ -39878,6 +39961,7 @@ components:
           title: ""
       type: object
     OutputRouter:
+      x-speakeasy-entity: OutputRouter
       required:
         - rules
         - type
@@ -39946,6 +40030,7 @@ components:
                 default: true
       type: object
     OutputSns:
+      x-speakeasy-entity: OutputSns
       required:
         - topicArn
         - messageGroupId
@@ -40162,6 +40247,7 @@ components:
           title: ""
       type: object
     OutputSqs:
+      x-speakeasy-entity: OutputSqs
       required:
         - queueName
         - queueType
@@ -40418,6 +40504,7 @@ components:
           title: ""
       type: object
     OutputSnmp:
+      x-speakeasy-entity: OutputSnmp
       required:
         - hosts
         - type
@@ -40478,6 +40565,7 @@ components:
                 default: 162
       type: object
     OutputSumoLogic:
+      x-speakeasy-entity: OutputSumoLogic
       required:
         - url
         - type
@@ -40690,6 +40778,7 @@ components:
           title: ""
       type: object
     OutputDatadog:
+      x-speakeasy-entity: OutputDatadog
       required:
         - id
         - type
@@ -40968,6 +41057,7 @@ components:
             target: apiKey
       type: object
     OutputGrafanaCloud:
+      x-speakeasy-entity: OutputGrafanaCloud
       required:
         - lokiUrl
         - prometheusUrl
@@ -41325,6 +41415,7 @@ components:
         - required:
             - prometheusUrl
     OutputLoki:
+      x-speakeasy-entity: OutputLoki
       required:
         - url
         - type
@@ -41611,6 +41702,7 @@ components:
           title: ""
       type: object
     OutputPrometheus:
+      x-speakeasy-entity: OutputPrometheus
       required:
         - url
         - type
@@ -41939,6 +42031,7 @@ components:
                 description: OAuth header value
       type: object
     OutputRing:
+      x-speakeasy-entity: OutputRing
       required:
         - id
         - type
@@ -42026,6 +42119,7 @@ components:
           default: block
       type: object
     OutputOpenTelemetry:
+      x-speakeasy-entity: OutputOpenTelemetry
       required:
         - endpoint
         - type
@@ -42462,6 +42556,7 @@ components:
           title: ""
       type: object
     OutputDataset:
+      x-speakeasy-entity: OutputDataset
       required:
         - id
         - type
@@ -42725,6 +42820,7 @@ components:
             target: apiKey
       type: object
     OutputCriblTcp:
+      x-speakeasy-entity: OutputCriblTcp
       required:
         - id
         - type
@@ -43023,6 +43119,7 @@ components:
             - hosts
       type: object
     OutputCriblHttp:
+      x-speakeasy-entity: OutputCriblHttp
       required:
         - id
         - type
@@ -43353,6 +43450,7 @@ components:
             - urls
       type: object
     OutputHumioHec:
+      x-speakeasy-entity: OutputHumioHec
       required:
         - format
         - type
@@ -43627,6 +43725,7 @@ components:
           title: ""
       type: object
     OutputDlS3:
+      x-speakeasy-entity: OutputDlS3
       required:
         - bucket
         - stagePath
@@ -43980,6 +44079,7 @@ components:
           maximum: 86400
       type: object
     OutputSecurityLake:
+      x-speakeasy-entity: OutputSecurityLake
       required:
         - bucket
         - stagePath
@@ -44292,7 +44392,6 @@ components:
           maximum: 86400
       type: object
     Output:
-      x-speakeasy-entity-operation: Output
       oneOf:
         - $ref: "#/components/schemas/OutputDefault"
         - $ref: "#/components/schemas/OutputWebhook"
@@ -44388,7 +44487,7 @@ components:
       required:
         - events
     SchemaLibEntry:
-      x-speakeasy-entity-operation: Schema
+      x-speakeasy-entity: Schema
       type: object
       additionalProperties: true
       required:
@@ -44507,7 +44606,7 @@ components:
                     title: Disabled
                     description: Whether this group is disabled
     ProfilerItem:
-      x-speakeasy-entity-operation: Profiler
+      x-speakeasy-entity: Profiler
       type: object
       properties:
         createTime:
@@ -44618,7 +44717,7 @@ components:
         - keypair
         - credentials
     RestSecret:
-      x-speakeasy-entity-operation: Secret
+      x-speakeasy-entity: Secret
       type: object
       properties:
         apiKey:
@@ -45421,7 +45520,6 @@ components:
                 (where applicable).
               default: false
         input:
-          x-speakeasy-entity-operation: Input
           type: object
           properties:
             type:
@@ -46216,7 +46314,7 @@ components:
         - id
         - level
     LoggerConfig:
-      x-speakeasy-entity-operation: LoggerConfig
+      x-speakeasy-entity: Logger
       type: object
       properties:
         channels:
