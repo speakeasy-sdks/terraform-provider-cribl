@@ -65,7 +65,27 @@ func (r *PipelineResourceModel) ToCreateSDKType() *shared.Pipeline {
 		})
 	}
 	groups := make(map[string]shared.PipelineConfGroups)
-	// Warning. This is a map, but the source tf var is not a map. This might indicate a bug.
+	for groupsKey, groupsValue := range r.Conf.Groups {
+		description2 := new(string)
+		if !groupsValue.Description.IsUnknown() && !groupsValue.Description.IsNull() {
+			*description2 = groupsValue.Description.ValueString()
+		} else {
+			description2 = nil
+		}
+		disabled1 := new(bool)
+		if !groupsValue.Disabled.IsUnknown() && !groupsValue.Disabled.IsNull() {
+			*disabled1 = groupsValue.Disabled.ValueBool()
+		} else {
+			disabled1 = nil
+		}
+		name := groupsValue.Name.ValueString()
+		groupsInst := shared.PipelineConfGroups{
+			Description: description2,
+			Disabled:    disabled1,
+			Name:        name,
+		}
+		groups[groupsKey] = groupsInst
+	}
 	output := new(string)
 	if !r.Conf.Output.IsUnknown() && !r.Conf.Output.IsNull() {
 		*output = r.Conf.Output.ValueString()

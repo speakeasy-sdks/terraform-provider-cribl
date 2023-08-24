@@ -21,7 +21,10 @@ func (r *ScriptResourceModel) ToCreateSDKType() *shared.ScriptLibEntry {
 		description = nil
 	}
 	env := make(map[string]string)
-	// Warning. This is a map, but the source tf var is not a map. This might indicate a bug.
+	for envKey, envValue := range r.Env {
+		envInst := envValue.ValueString()
+		env[envKey] = envInst
+	}
 	id := r.ID.ValueString()
 	var additionalProperties interface{}
 	if !r.AdditionalProperties.IsUnknown() && !r.AdditionalProperties.IsNull() {
