@@ -14216,7 +14216,6 @@ components:
         - id
       properties:
         id:
-          title: Filename
           description: Filename with the lookup table. Required.
           type: string
           pattern: ^\s*\w[\w -]+(?:\.csv|\.gz|\.csv\.gz|\.mmdb)?\s*$
