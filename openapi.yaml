@@ -1298,6 +1298,7 @@ paths:
           schema:
             type: string
           description: Unique ID
+          x-speakeasy-match: KeyID
       requestBody:
         description: KeyMetadataEntity object to be updated
         content:
@@ -1337,6 +1338,7 @@ paths:
           schema:
             type: string
           description: Unique ID
+          x-speakeasy-match: KeyID
       responses:
         "200":
           description: a list of KeyMetadataEntity objects
