@@ -1028,6 +1028,7 @@ paths:
         - name: id
           in: path
           required: true
+          x-speakeasy-match: id
           schema:
             type: string
           description: Unique ID
