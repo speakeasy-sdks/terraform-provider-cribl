@@ -11940,6 +11940,7 @@ components:
         keyId:
           type: string
           title: Key ID
+          x-speakeasy-match: id
         description:
           type: string
           title: Description
