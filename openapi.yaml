@@ -1264,6 +1264,7 @@ paths:
           schema:
             type: string
           description: Unique ID
+          x-speakeasy-match: KeyID
       responses:
         "200":
           description: a list of KeyMetadataEntity objects
