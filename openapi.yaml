@@ -1025,6 +1025,7 @@ paths:
             type: string
           description: "query string additional fields to add to results: git.commit,
             git.localChanges, git.log"
+          x-speakeasy-terraform-ignore: true
         - name: id
           in: path
           required: true
